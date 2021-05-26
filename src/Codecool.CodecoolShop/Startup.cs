@@ -65,19 +65,19 @@ namespace Codecool.CodecoolShop
             IProductCategoryDao productCategoryDataStore = ProductCategoryDaoMemory.GetInstance();
             ITravelAgencyDao travelAgencyDataStore = TravelAgencyDaoMemory.GetInstance();
 
-            TravelAgency rainbow = new TravelAgency(){Id = 0, Name = "Rainbow", Description = "Biuro podróży Rainbow to bogata oferta wakacji samolotem, autokarem wycieczek objazdowych oraz wczasów za granicą."};
+            TravelAgency rainbow = new TravelAgency(){Name = "Rainbow", Description = "Biuro podróży Rainbow to bogata oferta wakacji samolotem, autokarem wycieczek objazdowych oraz wczasów za granicą."};
             travelAgencyDataStore.Add(rainbow);
-            TravelAgency itaka = new TravelAgency(){Id = 1, Name = "Itaka", Description = "Biuro Podróży ITAKA - organizuje wczasy zagraniczne i wycieczki objazdowe samolotem i autokarem."};
+            TravelAgency itaka = new TravelAgency(){Name = "Itaka", Description = "Biuro Podróży ITAKA - organizuje wczasy zagraniczne i wycieczki objazdowe samolotem i autokarem."};
             travelAgencyDataStore.Add(itaka);
-            TravelAgency tui = new TravelAgency(){Id = 2, Name = "Tui", Description = "Biuro podróży TUI zorganizuje Twój wypoczynek, urlop lub wakacje. Najatrakcyjniejsze oferty last minute na wycieczki, hotele, wczasy za granicą."};
+            TravelAgency tui = new TravelAgency(){Name = "Tui", Description = "Biuro podróży TUI zorganizuje Twój wypoczynek, urlop lub wakacje. Najatrakcyjniejsze oferty last minute na wycieczki, hotele, wczasy za granicą."};
             travelAgencyDataStore.Add(itaka);
             
-            ProductCategory tourAndLeisure = new ProductCategory {Id = 0, Name = "Objazd i wypoczynek", Description = "Wakacje zwiedzanie i wypoczynek to idealne połączenie dla osób, które cenią zarówno aktywny wypoczynek, jak i odrobinę relaksu i chwil dla siebie." };
+            ProductCategory tourAndLeisure = new ProductCategory {Name = "Objazd i wypoczynek", Description = "Wakacje zwiedzanie i wypoczynek to idealne połączenie dla osób, które cenią zarówno aktywny wypoczynek, jak i odrobinę relaksu i chwil dla siebie." };
             productCategoryDataStore.Add(tourAndLeisure);
             
-            ProductCategory tour = new ProductCategory {Id = 1, Name = "Objazd", Description = "Wakacje zwiedzanie to idealne połączenie dla osób, które cenią zarówno aktywny wypoczynek, jak i odrobinę relaksu i chwil dla siebie." };
-            productCategoryDataStore.Add(tourAndLeisure);
-            
+            // ProductCategory tour = new ProductCategory {Name = "Objazd", Description = "Wakacje zwiedzanie to idealne połączenie dla osób, które cenią zarówno aktywny wypoczynek, jak i odrobinę relaksu i chwil dla siebie." };
+            // productCategoryDataStore.Add(tourAndLeisure);
+            //
             
             productDataStore.Add(new Product { 
                 Name = "Turcja Egejska - Sułtańskie Rarytasy",
@@ -145,7 +145,7 @@ namespace Codecool.CodecoolShop
                 Currency = "PLN", 
                 LengthOfStay = 8,
                 Description = "Wypoczynek w Aqabie - kurorcie Królestwa Jordanii (2 dni) • Petra - zabytek UNESCO • Wypoczynek nad Morzem Martwym (2 dni) • Betania - mejsce chrztu Jezusa Chrystusa • Góra Nebo • Dla chętnych możliwość przedłużenia o 7 dni wypoczynku w Aqabie!)", 
-                ProductCategory = tour, 
+                ProductCategory = tourAndLeisure, 
                 Country = "Jordania",
                 City = "",
                 ImgName = "RDwaMorza",
@@ -157,7 +157,7 @@ namespace Codecool.CodecoolShop
                 Currency = "PLN", 
                 LengthOfStay = 8,
                 Description = "Przejazdy samochodami 4x4 • Nocleg w obozie nomadów • Zachód słońca na Saharze • Ksar Ait Benhaddou • Marrakesz - czerwone miasto • dla chętnych tydzień pobytu w Agadirze", 
-                ProductCategory = tour, 
+                ProductCategory = tourAndLeisure, 
                 Country = "Maroko",
                 City = "",
                 ImgName = "RMarokoPustynnyOffroad",
@@ -169,7 +169,7 @@ namespace Codecool.CodecoolShop
                 Currency = "PLN", 
                 LengthOfStay = 8,
                 Description = "Zatoka Wraku na Zakynthos • Błękitne Groty • Lefkada - najpiękniejsze plaże Grecji • filmowa Kefalonia • jaskinia Drogarati i Melisanni • dla chętnych Ithaca • możliwość przedłużenia wypoczynku na Zakynthos", 
-                ProductCategory = tour, 
+                ProductCategory = tourAndLeisure, 
                 Country = "Grecja",
                 City = "",
                 ImgName = "RWyspyEptanisa",
@@ -181,7 +181,7 @@ namespace Codecool.CodecoolShop
                 Currency = "PLN", 
                 LengthOfStay = 8,
                 Description = "Wyspa Mysia i Liston . Paleokastritsa, BellaVista . Północ - Kanał Miłości - Kassiopi - port i plaża Imerolia. Dla chętnych możliwość zobaczenia błękitnych jaskiń i bajecznych zatok w okolicach wysp Paxos i Antipaxos oraz Albanii - możliwość przedłużenia pobytu na Korfu", 
-                ProductCategory = tour, 
+                ProductCategory = tourAndLeisure, 
                 Country = "Grecja",
                 City = "",
                 ImgName = "RSpieszSiePowoliKorfu",
@@ -193,7 +193,7 @@ namespace Codecool.CodecoolShop
                 Currency = "PLN", 
                 LengthOfStay = 6,
                 Description = "Wieża Eiffla - dla chętnych wjazd na szczyt wieży • Montmartre - dzielnica artystów • Pola Elizejskie - główna ulica świata • Dzielnica Łacińska i Ogrody Luksemburskie • Muzeum Impresjonistów • spokojny i relaksujący program", 
-                ProductCategory = tour, 
+                ProductCategory = tourAndLeisure, 
                 Country = "Francja",
                 City = "",
                 ImgName = "RParyzLight",
