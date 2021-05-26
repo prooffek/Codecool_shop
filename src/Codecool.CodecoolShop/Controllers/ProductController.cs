@@ -8,7 +8,9 @@ using Codecool.CodecoolShop.Daos.Implementations;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Codecool.CodecoolShop.Models;
+using Codecool.CodecoolShop.Search;
 using Codecool.CodecoolShop.Services;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Codecool.CodecoolShop.Controllers
 {
@@ -28,6 +30,9 @@ namespace Codecool.CodecoolShop.Controllers
         public IActionResult Index()
         {
             var products = ProductService.GetProductsForCategory(1);
+            List<ISearchable> agenciesOptions = new TravelAgency().GetSelectOptions(products);
+            ViewBag.Agencies = new SelectList(agenciesOptions, "Id", "Name");
+
             return View(products.ToList());
         }
 

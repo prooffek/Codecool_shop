@@ -7,7 +7,7 @@ namespace Codecool.CodecoolShop.Models
         public string Currency { get; set; }
         public decimal DefaultPrice { get; set; }
         public ProductCategory ProductCategory { get; set; }
-        public Supplier Supplier { get; set; }
+        public TravelAgency TravelAgency { get; set; }
 
         public void SetProductCategory(ProductCategory productCategory)
         {

@@ -46,9 +46,9 @@ namespace Codecool.CodecoolShop.Daos.Implementations
             return data;
         }
 
-        public IEnumerable<Product> GetBy(Supplier supplier)
+        public IEnumerable<Product> GetBy(TravelAgency travelAgency)
         {
-            return data.Where(x => x.Supplier.Id == supplier.Id);
+            return data.Where(x => x.TravelAgency.Id == travelAgency.Id);
         }
 
         public IEnumerable<Product> GetBy(ProductCategory productCategory)
