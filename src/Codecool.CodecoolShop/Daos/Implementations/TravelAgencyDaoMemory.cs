@@ -3,26 +3,26 @@ using Codecool.CodecoolShop.Models;
 
 namespace Codecool.CodecoolShop.Daos.Implementations
 {
-    public class SupplierDaoMemory : ISupplierDao
+    public class TravelAgencyDaoMemory : ITravelAgencyDao
     {
-        private List<Supplier> data = new List<Supplier>();
-        private static SupplierDaoMemory instance = null;
+        private List<TravelAgency> data = new List<TravelAgency>();
+        private static TravelAgencyDaoMemory instance = null;
 
-        private SupplierDaoMemory()
+        private TravelAgencyDaoMemory()
         {
         }
 
-        public static SupplierDaoMemory GetInstance()
+        public static TravelAgencyDaoMemory GetInstance()
         {
             if (instance == null)
             {
-                instance = new SupplierDaoMemory();
+                instance = new TravelAgencyDaoMemory();
             }
 
             return instance;
         }
 
-        public void Add(Supplier item)
+        public void Add(TravelAgency item)
         {
             item.Id = data.Count + 1;
             data.Add(item);
@@ -33,12 +33,12 @@ namespace Codecool.CodecoolShop.Daos.Implementations
             data.Remove(this.Get(id));
         }
 
-        public Supplier Get(int id)
+        public TravelAgency Get(int id)
         {
             return data.Find(x => x.Id == id);
         }
 
-        public IEnumerable<Supplier> GetAll()
+        public IEnumerable<TravelAgency> GetAll()
         {
             return data;
         }
