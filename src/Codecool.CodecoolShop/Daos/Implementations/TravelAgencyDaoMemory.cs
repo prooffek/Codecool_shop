@@ -3,20 +3,20 @@ using Codecool.CodecoolShop.Models;
 
 namespace Codecool.CodecoolShop.Daos.Implementations
 {
-    public class SupplierDaoMemory : ISupplierDao
+    public class TravelAgencyDaoMemory : ITravelAgencyDao
     {
         private List<TravelAgency> data = new List<TravelAgency>();
-        private static SupplierDaoMemory instance = null;
+        private static TravelAgencyDaoMemory instance = null;
 
-        private SupplierDaoMemory()
+        private TravelAgencyDaoMemory()
         {
         }
 
-        public static SupplierDaoMemory GetInstance()
+        public static TravelAgencyDaoMemory GetInstance()
         {
             if (instance == null)
             {
-                instance = new SupplierDaoMemory();
+                instance = new TravelAgencyDaoMemory();
             }
 
             return instance;
