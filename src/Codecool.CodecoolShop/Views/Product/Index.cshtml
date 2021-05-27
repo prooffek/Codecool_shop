@@ -3,7 +3,7 @@
 }
 @{
     //@model List<Codecool.CodecoolShop.Models.Product>
-    @model Codecool.CodecoolShop.Models.Test
+    @model ShopModel
 }
 
 <div class="container">
@@ -11,8 +11,7 @@
         <h4>Filters</h4>
         @using (Html.BeginForm("FilterByTravelAgency", "Product", FormMethod.Post))
         {
-            //@Html.DropDownList("selec-agency", ViewBag.Agencies as SelectList, "Wybierz biuro podróży")
-            @Html.DropDownListFor(x => x.TravelAgencyId, Model.TravelAgenciesList, "Wybierz biuro podróży")
+            @Html.DropDownListFor(x => x.TravelAgencyId, Model.TravelAgencies, "Wybierz biuro podróży")
             <input type="submit", value="Filtruj", class="btn-primary" />
         }
     </div>

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Codecool.CodecoolShop.Daos;
 using Codecool.CodecoolShop.Daos.Implementations;
@@ -33,22 +34,47 @@ namespace Codecool.CodecoolShop.Controllers
 
         public IActionResult Index()
         {
-            //var products = ProductService.GetProductsForCategory(1);
-            //List<IFilterable> agenciesOptions = new TravelAgency().GetSelectOptions(products);
-            //ViewBag.Agencies = new SelectList(agenciesOptions, "Id", "Name");
-            var ShopModel = new Test(ProductService);
+            var ShopModel = new ShopModel(ProductService);
 
             return View(ShopModel);
+            
+            //var products = ProductService.GetProductsForCategory(1);
+            //ShopModel shopModel= new ShopModel() {ProductsList = products.ToList()};
+            //FillListsToFilter(shopModel, products);
+            //return View(shopModel);
         }
+
+        private void FillListsToFilter(ShopModel shopModel, IEnumerable<Product> products )
+        {
+            shopModel.CountriesList = GetNamesToPrint(products, "Country");
+            //shopModel.CategoriesList = TakeNamesToPrint(products, "ProductCategory");
+            //shopModel.TravelAgenciesList = TakeNamesToPrint(products, "TravelAgency");
+        }
+
+        private List<string> GetNamesToPrint(IEnumerable<Product> products, string name)
+        {
+            List<string> NamesList = new List<string>();
+            
+            foreach (var element in products)
+            {
+                var propertyValue = element.GetType().GetProperty(name).GetValue(element).ToString();
+                if(!NamesList.Contains(propertyValue))
+                {
+                    NamesList.Add(propertyValue);
+                }
+            }
+
+            return NamesList;
+        }
+
 
         public IActionResult Privacy()
         {
             return View();
         }
 
-        public IActionResult FilterByTravelAgency(Test shopModel)
+        public IActionResult FilterByTravelAgency(ShopModel shopModel)
         {
-            //var products = TravelAgencyService.GetProductsForTravelAgencies(agencyId);
             var selectedProducts = TravelAgencyService.GetProductsForTravelAgencies(shopModel.TravelAgencyId);
             shopModel.ConfigureClassProperties(ProductService, selectedProducts);
             return View("Index", shopModel);
