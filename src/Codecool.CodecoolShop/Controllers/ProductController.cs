@@ -113,6 +113,12 @@ namespace Codecool.CodecoolShop.Controllers
             return View("Index", new ShopModel(ProductService));
         }
 
+        public IActionResult TravelDetails(int id)
+        {
+            Product product = ProductService.GetProductForId(id);
+            return View(product);
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
