@@ -10,8 +10,8 @@ namespace Codecool.CodecoolShop.Models
     {
         public List<Product> ProductsList;
         public List<string> CountriesList { get; set; }
-        public List<string> TravelAgenciesList { get; set; }
-        public List<string> CategoriesList { get; set; }
+        public List<TravelAgency> TravelAgenciesList { get; set; }
+        public List<ProductCategory> CategoriesList { get; set; }
         
         public IEnumerable<Product> Products { get; set; }
         public List<IFilterable> AgenciesOptions { get; private set; }
