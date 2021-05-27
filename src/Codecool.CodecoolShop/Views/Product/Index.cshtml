@@ -1,20 +1,33 @@
 @{
     ViewData["Title"] = "Home Page";
 }
-
-@model ShopModel
+@{
+    //@model List<Codecool.CodecoolShop.Models.Product>
+    @model ShopModel
+}
 
 <div class="container">
-    @foreach (var element in Model.ProductsList)
+    <div class="col-lg-3 col-lg-3" style="display: inline-block; height: 10vh; width: 100%;">
+        <h4>Filters</h4>
+        @using (Html.BeginForm("FilterByTravelAgency", "Product", FormMethod.Post))
+        {
+            @Html.DropDownListFor(x => x.TravelAgencyId, Model.TravelAgencies, "Wybierz biuro podróży")
+            <input type="submit", value="Filtruj", class="btn-primary" />
+        }
+    </div>
+</div>
+
+<div class="container">
+    @foreach (var element in Model.Products)
     {
         <div class="col-lg-3 col-lg-3" style="display: inline-block; max-width: 350px; height: 350px">
             <div class="card">
-                <img src="img/@(element.ImgName).png" style="height: 50%; width: 50%; align-self: center; padding-top: 10px">
+                <img src="/img/@(element.ImgName).png" style="height: 50%; width: 50%; align-self: center; padding-top: 10px">
 
                 <div class="card-body">
                     <h5 class="card-title text-center">
                         Product
-                        @{ var num = Model.ProductsList.IndexOf(element) + 1;}
+                        @{ var num = Model.Products.ToList().IndexOf(element) + 1;}
                         @num
                     </h5>
                     <h5 class="card-title">@element.Name</h5>

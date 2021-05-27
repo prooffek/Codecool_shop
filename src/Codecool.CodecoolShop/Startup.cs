@@ -63,6 +63,21 @@ namespace Codecool.CodecoolShop
         {
             IProductDao productDataStore = ProductDaoMemory.GetInstance();
             IProductCategoryDao productCategoryDataStore = ProductCategoryDaoMemory.GetInstance();
+
+            /*
+            ISupplierDao supplierDataStore = SupplierDaoMemory.GetInstance();
+
+            var amazon = new TravelAgency(){Name = "Amazon", Description = "Digital content and services"};
+            supplierDataStore.Add(amazon);
+            var lenovo = new TravelAgency(){Name = "Lenovo", Description = "Computers"};
+            supplierDataStore.Add(lenovo);
+            ProductCategory tablet = new ProductCategory {Name = "Tablet", Department = "Hardware", Description = "A tablet computer, commonly shortened to tablet, is a thin, flat mobile computer with a touchscreen display." };
+            productCategoryDataStore.Add(tablet);
+            productDataStore.Add(new Product { Name = "Amazon Fire", DefaultPrice = 49.9m, Currency = "USD", Description = "Fantastic price. Large content ecosystem. Good parental controls. Helpful technical support.", ProductCategory = tablet, TravelAgency = amazon });
+            productDataStore.Add(new Product { Name = "Lenovo IdeaPad Miix 700", DefaultPrice = 479.0m, Currency = "USD", Description = "Keyboard cover is included. Fanless Core m5 processor. Full-size USB ports. Adjustable kickstand.", ProductCategory = tablet, TravelAgency = lenovo });
+            productDataStore.Add(new Product { Name = "Amazon Fire HD 8", DefaultPrice = 89.0m, Currency = "USD", Description = "Amazon's latest Fire HD 8 tablet is a great value for media consumption.", ProductCategory = tablet, TravelAgency = amazon });
+            */
+
             ITravelAgencyDao travelAgencyDataStore = TravelAgencyDaoMemory.GetInstance();
 
             TravelAgency rainbow = new TravelAgency(){Name = "Rainbow", Description = "Biuro podróży Rainbow to bogata oferta wakacji samolotem, autokarem wycieczek objazdowych oraz wczasów za granicą."};
@@ -70,7 +85,7 @@ namespace Codecool.CodecoolShop
             TravelAgency itaka = new TravelAgency(){Name = "Itaka", Description = "Biuro Podróży ITAKA - organizuje wczasy zagraniczne i wycieczki objazdowe samolotem i autokarem."};
             travelAgencyDataStore.Add(itaka);
             TravelAgency tui = new TravelAgency(){Name = "Tui", Description = "Biuro podróży TUI zorganizuje Twój wypoczynek, urlop lub wakacje. Najatrakcyjniejsze oferty last minute na wycieczki, hotele, wczasy za granicą."};
-            travelAgencyDataStore.Add(itaka);
+            travelAgencyDataStore.Add(tui);
             
             ProductCategory tourAndLeisure = new ProductCategory {Name = "Objazd i wypoczynek", Description = "Wakacje zwiedzanie i wypoczynek to idealne połączenie dla osób, które cenią zarówno aktywny wypoczynek, jak i odrobinę relaksu i chwil dla siebie." };
             productCategoryDataStore.Add(tourAndLeisure);
@@ -198,7 +213,6 @@ namespace Codecool.CodecoolShop
                 City = "",
                 ImgName = "RParyzLight",
                 TravelAgency = rainbow });
-            
         }
     }
 }
