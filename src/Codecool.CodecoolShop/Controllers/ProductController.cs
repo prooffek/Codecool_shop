@@ -31,18 +31,46 @@ namespace Codecool.CodecoolShop.Controllers
             var products = ProductService.GetProductsForCategory(1);
             ShopModel shopModel= new ShopModel() {ProductsList = products.ToList()};
             FillListsToFilter(shopModel, products);
+            
             return View(shopModel);
                 
         }
 
         private void FillListsToFilter(ShopModel shopModel, IEnumerable<Product> products )
         {
-            shopModel.CountriesList = GetNamesToPrint(products, "Country");
-            //shopModel.CategoriesList = TakeNamesToPrint(products, "ProductCategory");
-            //shopModel.TravelAgenciesList = TakeNamesToPrint(products, "TravelAgency");
+            shopModel.CountriesList = GetNamesToPrint(products, "Country");// do zmiany kiedy będzie object country
+            shopModel.CategoriesList = GetObjectsToFilterCategories(products);
+            shopModel.TravelAgenciesList = GetObjectsToFilterAgency(products);
         }
 
-        private List<string> GetNamesToPrint(IEnumerable<Product> products, string name)
+        private List<TravelAgency> GetObjectsToFilterAgency(IEnumerable<Product> products)
+        {
+            List<TravelAgency> travelAgenciesList = new List<TravelAgency>();
+            foreach (var product in products)
+            {
+                if (!travelAgenciesList.Contains(product.TravelAgency))
+                {
+                    travelAgenciesList.Add(product.TravelAgency);
+                }
+            }
+
+            return travelAgenciesList;
+        }
+
+        private List<ProductCategory> GetObjectsToFilterCategories(IEnumerable<Product> products)
+        {            
+            List<ProductCategory> produtCategoriesList = new List<ProductCategory>();
+            foreach (var product in products)
+            {
+                if (!produtCategoriesList.Contains(product.ProductCategory))
+                {
+                    produtCategoriesList.Add(product.ProductCategory);
+                }
+            }
+
+            return produtCategoriesList;
+        }
+         private List<string> GetNamesToPrint(IEnumerable<Product> products, string name)
         {
             List<string> NamesList= new List<string>();
             

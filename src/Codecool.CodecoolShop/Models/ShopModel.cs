@@ -8,8 +8,8 @@ namespace Codecool.CodecoolShop.Models
     {
         public List<Codecool.CodecoolShop.Models.Product> ProductsList;
         public List<string> CountriesList { get; set; }
-        public List<string> TravelAgenciesList { get; set; }
-        public List<string> CategoriesList { get; set; }
+        public List<TravelAgency> TravelAgenciesList { get; set; }
+        public List<ProductCategory> CategoriesList { get; set; }
         
      
         
