@@ -99,11 +99,18 @@ namespace Codecool.CodecoolShop.Controllers
             return View();
         }
 
-        public IActionResult FilterByTravelAgency(ShopModel shopModel)
+        public IActionResult FilteredByTravelAgency(ShopModel shopModel)
         {
-            var selectedProducts = TravelAgencyService.GetProductsForTravelAgencies(shopModel.TravelAgencyId);
-            shopModel.ConfigureClassProperties(ProductService, selectedProducts);
-            return View("Index", shopModel);
+            bool anOptionIsSelected = shopModel.TravelAgencyId != 0;
+            
+            if (anOptionIsSelected)
+            {
+                var productsFromTheTravelAgency = TravelAgencyService.GetProductsForTravelAgencies(shopModel.TravelAgencyId);
+                shopModel.ConfigureClassProperties(ProductService, productsFromTheTravelAgency);
+                return View("Index", shopModel);
+            }
+
+            return View("Index", new ShopModel(ProductService));
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
