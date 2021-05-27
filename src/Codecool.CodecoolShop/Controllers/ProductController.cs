@@ -34,11 +34,11 @@ namespace Codecool.CodecoolShop.Controllers
 
         public IActionResult Index()
         {
-            //var ShopModel = new ShopModel(ProductService);
+            var shopModel = new ShopModel(ProductService);
 
-            var products = ProductService.GetProductsForCategory(1);
-            ShopModel shopModel= new ShopModel() {ProductsList = products.ToList()};
-            FillListsToFilter(shopModel, products);
+            //var products = ProductService.GetProductsForCategory(1);
+            //ShopModel shopModel= new ShopModel() {ProductsList = products.ToList()};
+            //FillListsToFilter(shopModel, products);
             
             return View(shopModel);
         }
