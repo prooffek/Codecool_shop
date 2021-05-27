@@ -85,7 +85,7 @@ namespace Codecool.CodecoolShop
             TravelAgency itaka = new TravelAgency(){Name = "Itaka", Description = "Biuro Podróży ITAKA - organizuje wczasy zagraniczne i wycieczki objazdowe samolotem i autokarem."};
             travelAgencyDataStore.Add(itaka);
             TravelAgency tui = new TravelAgency(){Name = "Tui", Description = "Biuro podróży TUI zorganizuje Twój wypoczynek, urlop lub wakacje. Najatrakcyjniejsze oferty last minute na wycieczki, hotele, wczasy za granicą."};
-            travelAgencyDataStore.Add(itaka);
+            travelAgencyDataStore.Add(tui);
             
             ProductCategory tourAndLeisure = new ProductCategory {Name = "Objazd i wypoczynek", Description = "Wakacje zwiedzanie i wypoczynek to idealne połączenie dla osób, które cenią zarówno aktywny wypoczynek, jak i odrobinę relaksu i chwil dla siebie." };
             productCategoryDataStore.Add(tourAndLeisure);

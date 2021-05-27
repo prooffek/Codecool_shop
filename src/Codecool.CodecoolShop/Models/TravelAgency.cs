@@ -3,12 +3,12 @@ using Codecool.CodecoolShop.Search;
 
 namespace Codecool.CodecoolShop.Models
 {
-    public class TravelAgency : BaseModel, ISearchable
+    public class TravelAgency : BaseModel, IFilterable
     {
         public List<Product> Products { get; set; }
-        public List<ISearchable> GetSelectOptions(IEnumerable<Product> products)
+        public List<IFilterable> GetSelectOptions(IEnumerable<Product> products)
         {
-            List<ISearchable> agencyNames = new List<ISearchable>();
+            List<IFilterable> agencyNames = new List<IFilterable>();
 
             foreach (var product in products)
             {
