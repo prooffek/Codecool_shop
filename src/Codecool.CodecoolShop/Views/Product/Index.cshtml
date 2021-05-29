@@ -1,3 +1,4 @@
+@using System.Text.Json
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -22,27 +23,24 @@
 <div class="container">
     @foreach (var element in Model.Products)
     {
-        <div class="col-lg-3 col-lg-3" style="display: inline-block; max-width: 350px; height: 550px;">
+        <div class="col-lg-3 col-lg-3" style="display: inline-block; max-width: 350px; height: auto; padding-top: 3vh">
             <div class="card">
-                <img src="/img/@(element.ImgName).png" style="height: 100px; width: 150px; align-self: center; padding-top: 10px">
+                <img src="/img/@(element.ImgName).png" style="height: 100px; width: auto; align-self: center; padding-top: 10px">
 
-                <div class="card-body" style="height: 400px">
-                    <h5 class="card-title text-center">
-                        Product
-                        @{ var num = Model.Products.ToList().IndexOf(element) + 1;}
-                        @num
-                    </h5>
-                    <h5 class="card-title">@element.Name</h5>
-                    <p class="card-text">@element.Description.Substring(0, 50)...</p>
+                <div class="card-body" style="height: 380px">
+                    <a class="travel-title" id="title-link-@(element.Id)">
+                        <h5 class="card-title text-center" data-id="@(element.Id)">@element.Name</h5>
+                    </a>
+                    <p class="card-text">@element.Description.Substring(0, 100)...</p>
                     <p class="card-text">Kraj: @element.Country.Name.</p>
-                    <p class="card-text">Category: @element.ProductCategory.Name</p>
-                    <p class="card-text">Supplier: @element.TravelAgency.Name</p>
-                    <p class="card-text text-center"><strong>Price: @element.DefaultPrice.ToString("C2")</strong></p>
-                    <a href="" type="button" class="btn btn-primary" style="float: bottom">Add To Cart</a>
+                    <p class="card-text">Kategoria: @element.ProductCategory.Name</p>
+                    <p class="card-text">Biuro podróży: @element.TravelAgency.Name</p>
+                    <p class="card-text text-center"><strong>Cena: @element.DefaultPrice.ToString("C2")</strong></p>
+                    <a href="" type="button" class="btn btn-primary" style="float: bottom">Do Koszyka</a>
                 </div>
             </div>
         </div>
     }
-
-
+</div>
+<div class="container hide" id="travel-details-modal">
 </div>
