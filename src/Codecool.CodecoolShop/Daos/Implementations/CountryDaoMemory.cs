@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Codecool.CodecoolShop.Models;
 
 namespace Codecool.CodecoolShop.Daos.Implementations
@@ -41,6 +42,11 @@ namespace Codecool.CodecoolShop.Daos.Implementations
         public IEnumerable<Country> GetAll()
         {
             return data;
+        }
+
+        public List<string> GetOptions()
+        {
+            return data.Select(country => country.Name).ToList();
         }
     }
 }
