@@ -43,10 +43,5 @@ namespace Codecool.CodecoolShop.Daos.Implementations
         {
             return data;
         }
-
-        public List<string> GetOptions()
-        {
-            return data.Select(country => country.Name).ToList();
-        }
     }
 }
