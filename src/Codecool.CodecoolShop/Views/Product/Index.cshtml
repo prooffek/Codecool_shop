@@ -1,3 +1,4 @@
+@using System.Text.Json
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -27,8 +28,8 @@
                 <img src="/img/@(element.ImgName).png" style="height: 100px; width: auto; align-self: center; padding-top: 10px">
 
                 <div class="card-body" style="height: 380px">
-                    <a href="@Url.Action("TravelDetails", "Product", new {id = element.Id})">
-                        <h5 class="card-title text-center">@element.Name</h5>
+                    <a class="travel-title" id="title-link-@(element.Id)">
+                        <h5 class="card-title text-center" data-id="@(element.Id)">@element.Name</h5>
                     </a>
                     <p class="card-text">@element.Description.Substring(0, 100)...</p>
                     <p class="card-text">Kraj: @element.Country.Name.</p>
@@ -40,6 +41,6 @@
             </div>
         </div>
     }
-
-
+</div>
+<div class="container hide" id="travel-details-modal">
 </div>
