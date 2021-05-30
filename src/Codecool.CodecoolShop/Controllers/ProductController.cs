@@ -114,6 +114,23 @@ namespace Codecool.CodecoolShop.Controllers
             return View("Index", new ShopModel(ProductService));
         }
 
+        public IActionResult FilteredByCategory(ShopModel shopModel)
+        {
+            bool anOptionIsSelected = shopModel.ProductCategoryId != 0;
+
+            if (anOptionIsSelected)
+            {
+                
+            
+            var productsFromCategory = ProductService.GetProductsForCategory(shopModel.ProductCategoryId);
+            shopModel.ConfigureClassPropertiesCategory(ProductService, productsFromCategory);
+            return View("Index", shopModel);
+            }
+
+            FilteredByTravelAgency(shopModel);
+            return View("Index", new ShopModel(ProductService));
+        }
+
         public IActionResult TravelDetails(int id)
         {
             Product product = ProductService.GetProductForId(id);
