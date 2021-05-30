@@ -27,7 +27,8 @@ namespace Codecool.CodecoolShop.Controllers
             _logger = logger;
             ProductService = new ProductService(
                 ProductDaoMemory.GetInstance(),
-                ProductCategoryDaoMemory.GetInstance());
+                ProductCategoryDaoMemory.GetInstance(),
+                CountryDaoMemory.GetInstance());
             TravelAgencyService = new TravelAgencyService(
                 ProductDaoMemory.GetInstance(),
                 TravelAgencyDaoMemory.GetInstance());
@@ -46,7 +47,7 @@ namespace Codecool.CodecoolShop.Controllers
 
         private void FillListsToFilter(ShopModel shopModel, IEnumerable<Product> products )
         {
-            shopModel.CountriesList = GetNamesToPrint(products, "Country");// do zmiany kiedy będzie object country
+            // shopModel.CountriesList = GetNamesToPrint(products, "Country");// do zmiany kiedy będzie object country
             shopModel.CategoriesList = GetObjectsToFilterCategories(products);
             shopModel.TravelAgenciesList = GetObjectsToFilterAgency(products);
         }
@@ -78,21 +79,21 @@ namespace Codecool.CodecoolShop.Controllers
 
             return produtCategoriesList;
         }
-         private List<string> GetNamesToPrint(IEnumerable<Product> products, string name)
-        {
-            List<string> NamesList = new List<string>();
-            
-            foreach (var element in products)
-            {
-                var propertyValue = element.GetType().GetProperty(name).GetValue(element).ToString();
-                if(!NamesList.Contains(propertyValue))
-                {
-                    NamesList.Add(propertyValue);
-                }
-            }
-
-            return NamesList;
-        }
+        //  private List<string> GetObjectsToFilterCountry(IEnumerable<Product> products)
+        // {
+        //     List<Country> countryList = new List<string>();
+        //     
+        //     foreach (var element in products)
+        //     {
+        //         var propertyValue = element.GetType().GetProperty(name).GetValue(element).ToString();
+        //         if(!NamesList.Contains(propertyValue))
+        //         {
+        //             NamesList.Add(propertyValue);
+        //         }
+        //     }
+        //
+        //     return NamesList;
+        // }
 
 
         public IActionResult Privacy()
@@ -144,6 +145,21 @@ namespace Codecool.CodecoolShop.Controllers
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+
+        public IActionResult FilteredByCountries(ShopModel shopModel)
+        {
+            int selectedValue = shopModel.CountryId;
+
+            if (selectedValue != 0)
+            {
+                var productsFromCountry = ProductService.GetProductsForCountry(shopModel.CountryId);
+                shopModel.ConfigureClassProperties(ProductService, productsFromCountry);
+                return View("Index", shopModel);
+            }
+
+            return View("Index", new ShopModel(ProductService));
+
+        }
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
