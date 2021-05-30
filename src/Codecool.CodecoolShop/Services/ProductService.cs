@@ -38,5 +38,15 @@ namespace Codecool.CodecoolShop.Services
             Country country = this.countryDao.Get(countryId);
             return this.productDao.GetBy(country);
         }
+
+        public Product GetProductForId(int productId)
+        {
+            return productDao.Get(productId);
+        }
+
+        public IEnumerable<Product> GetAllProducts()
+        {
+            return this.productDao.GetAll();
+        }
     }
 }

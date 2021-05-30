@@ -1,0 +1,16 @@
+@model Product
+
+@{
+    ViewBag.Title = "title";
+    //Layout = "_Layout";
+}
+
+<h1>@Model.Name</h1>
+<img src="/img/@(Model.ImgName).png" style="max-height: 350px; width: auto; padding: 3vh" class="img-fluid">
+<p class="card-text"><b>Opis:</b> @Model.Description.</p>
+<p class="card-text"><b>Kraj:</b> @Model.Country.Name.</p>
+<p class="card-text"><b>Kategoria:</b> @Model.ProductCategory.Name</p>
+<p class="card-text"><b>Biuro podróży:</b> @Model.TravelAgency.Name</p>
+<p class="card-text"><strong><b>Cena</b>: @Model.DefaultPrice.ToString("C2")</strong></p>
+<a href="" type="button" class="btn btn-primary" style="float: bottom">Do Koszyka</a>
+

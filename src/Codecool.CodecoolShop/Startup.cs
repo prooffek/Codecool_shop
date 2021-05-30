@@ -80,6 +80,7 @@ namespace Codecool.CodecoolShop
 
             ITravelAgencyDao travelAgencyDataStore = TravelAgencyDaoMemory.GetInstance();
             ICountryDao countryDataStore = CountryDaoMemory.GetInstance();
+            
 
             TravelAgency rainbow = new TravelAgency(){Name = "Rainbow", Description = "Biuro podróży Rainbow to bogata oferta wakacji samolotem, autokarem wycieczek objazdowych oraz wczasów za granicą."};
             travelAgencyDataStore.Add(rainbow);
@@ -90,7 +91,8 @@ namespace Codecool.CodecoolShop
             
             ProductCategory tourAndLeisure = new ProductCategory {Name = "Objazd i wypoczynek", Description = "Wakacje zwiedzanie i wypoczynek to idealne połączenie dla osób, które cenią zarówno aktywny wypoczynek, jak i odrobinę relaksu i chwil dla siebie." };
             productCategoryDataStore.Add(tourAndLeisure);
-            
+            ProductCategory leisure = new ProductCategory {Name = "Wypoczynek", Description = "Opis do poprawy." };
+            productCategoryDataStore.Add(leisure);
             ProductCategory tour = new ProductCategory {Name = "Objazd", Description = "Wakacje zwiedzanie to idealne połączenie dla osób, które cenią zarówno aktywny wypoczynek, jak i odrobinę relaksu i chwil dla siebie." };
             productCategoryDataStore.Add(tour);
 
@@ -130,7 +132,7 @@ namespace Codecool.CodecoolShop
                 Currency = "PLN", 
                 LengthOfStay = 8,
                 Description = "Myra - rzymska metropolia, Pamukkale i termalne źródła, Wąwóz Saklikent, kanał Dalyan, Afrodyzja - świątynia bogini miłości, Myra i św. Mikołaj, 1 dzień wypoczynku w trakcie objazdu", 
-                ProductCategory = tourAndLeisure, 
+                ProductCategory = tour, 
                 Country = turkey,
                 City = "",
                 ImgName = "RTurcjaTurcjaLicyjska",
@@ -166,7 +168,7 @@ namespace Codecool.CodecoolShop
                 Currency = "PLN", 
                 LengthOfStay = 8,
                 Description = "Sozopol - perła Morza Czarnego • Beglik Tash – bułgarskie Stonehenge • banica i szopska sałata – gotowanie w wiejskiej chacie – poczęstunek zakrapiany rakiją • Nessebyr – najpiękniejsze bułgarskie miasteczko (UNESCO) – rejs statkiem • Bałczik – Białe Miasto i pałac księżnej Marii • Kaliakra – przylądek z czerwonych skał • Warna – stolica wybrzeża Morza Czarnego • rejs na wyspę św.Anastazji • dla chętnych wypoczynek w Słonecznym Brzegu (3 lub 7 nocy)", 
-                ProductCategory = tourAndLeisure, 
+                ProductCategory = leisure, 
                 Country = bulgaria,
                 City = "",
                 ImgName = "RZloteWybrzezeCzarnegoMorza",
@@ -226,11 +228,11 @@ namespace Codecool.CodecoolShop
                 Currency = "PLN", 
                 LengthOfStay = 6,
                 Description = "Wieża Eiffla - dla chętnych wjazd na szczyt wieży • Montmartre - dzielnica artystów • Pola Elizejskie - główna ulica świata • Dzielnica Łacińska i Ogrody Luksemburskie • Muzeum Impresjonistów • spokojny i relaksujący program", 
-                ProductCategory = tourAndLeisure, 
+                ProductCategory = tour, 
                 Country = france,
                 City = "",
                 ImgName = "RParyzLight",
-                TravelAgency = rainbow });
+                TravelAgency = itaka });
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Codecool.CodecoolShop.Daos;
 using Codecool.CodecoolShop.Daos.Implementations;
@@ -112,6 +113,35 @@ namespace Codecool.CodecoolShop.Controllers
             }
 
             return View("Index", new ShopModel(ProductService));
+        }
+
+        public IActionResult FilteredByCategory(ShopModel shopModel)
+        {
+            bool anOptionIsSelected = shopModel.ProductCategoryId != 0;
+
+            if (anOptionIsSelected)
+            {
+                
+            
+            var productsFromCategory = ProductService.GetProductsForCategory(shopModel.ProductCategoryId);
+            shopModel.ConfigureClassPropertiesCategory(ProductService, productsFromCategory);
+            return View("Index", shopModel);
+            }
+
+            FilteredByTravelAgency(shopModel);
+            return View("Index", new ShopModel(ProductService));
+        }
+
+        public IActionResult TravelDetails(int id)
+        {
+            Product product = ProductService.GetProductForId(id);
+            return View(product);
+        }
+
+        public string GetProductData(int id)
+        {
+            Product product = ProductService.GetProductForId(id);
+            return JsonSerializer.Serialize(product);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
