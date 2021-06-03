@@ -40,7 +40,7 @@ namespace Codecool.CodecoolShop.Controllers
         public IActionResult Index()
         {
             var shopModel = new ShopModel(ProductService);
-            var cart = SessionHelper.GetObjectFromJson<List<CartItem>>(HttpContext.Session, "cart");
+            var cart = SessionHelper.GetObjectFromJson<Cart>(HttpContext.Session, "cart");
             //var products = ProductService.GetProductsForCategory(1);
             //ShopModel shopModel= new ShopModel() {ProductsList = products.ToList()};
             //FillListsToFilter(shopModel, products);
@@ -124,10 +124,9 @@ namespace Codecool.CodecoolShop.Controllers
 
             if (anOptionIsSelected)
             {
-
-            var productsFromCategory = ProductService.GetProductsForCategory(shopModel.ProductCategoryId);
-            shopModel.ConfigureClassPropertiesCategory(ProductService, productsFromCategory);
-            return View("Index", shopModel);
+                var productsFromCategory = ProductService.GetProductsForCategory(shopModel.ProductCategoryId);
+                shopModel.ConfigureClassPropertiesCategory(ProductService, productsFromCategory);
+                return View("Index", shopModel);
             }
 
             FilteredByTravelAgency(shopModel);
@@ -191,7 +190,6 @@ namespace Codecool.CodecoolShop.Controllers
             {
                 Console.WriteLine(element.Product.Name);
             }
-            
         }
     }
 }

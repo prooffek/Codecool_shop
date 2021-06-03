@@ -30,5 +30,20 @@ namespace Codecool.CodecoolShop.Models
             else if (CartItems.Contains(cartItem)) //newQuantity is below zero
                 RemoveCartItem(cartItem);
         }
+
+        public void DecrementCartItemQuantity(CartItem cartItem)
+        {
+            if (CartItems.Contains(cartItem))
+                cartItem.DecrementQuantity();
+
+            if (cartItem.Quantity <= 0)
+                RemoveCartItem(cartItem);
+        }
+
+        public void IncrementCartItemQuantity(CartItem cartItem)
+        {
+            if (CartItems.Contains(cartItem))
+                cartItem.IncrementQuantity();
+        }
     }
 }
