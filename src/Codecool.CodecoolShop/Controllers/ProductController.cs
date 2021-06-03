@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using Codecool.CodecoolShop.Models;
 using Codecool.CodecoolShop.Search;
 using Codecool.CodecoolShop.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Codecool.CodecoolShop.Controllers
@@ -41,7 +42,7 @@ namespace Codecool.CodecoolShop.Controllers
             //var products = ProductService.GetProductsForCategory(1);
             //ShopModel shopModel= new ShopModel() {ProductsList = products.ToList()};
             //FillListsToFilter(shopModel, products);
-            
+
             return View(shopModel);
         }
 

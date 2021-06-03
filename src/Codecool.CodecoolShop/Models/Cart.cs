@@ -22,5 +22,13 @@ namespace Codecool.CodecoolShop.Models
         {
             Sum = CartItems.Sum(x => x.Sum);
         }
+
+        public void EditCartItemQuantity(CartItem cartItem, int newQuantity)
+        {
+            if (CartItems.Contains(cartItem) && newQuantity > 0) 
+                cartItem.EditQuantity(newQuantity);
+            else if (CartItems.Contains(cartItem)) //newQuantity is below zero
+                RemoveCartItem(cartItem);
+        }
     }
 }
