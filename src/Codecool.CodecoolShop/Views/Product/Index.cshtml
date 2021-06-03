@@ -1,3 +1,4 @@
+@using Codecool.CodecoolShop.Controllers
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -49,11 +50,14 @@
                     <p class="card-text">Kategoria: @element.ProductCategory.Name</p>
                     <p class="card-text">Biuro podróży: @element.TravelAgency.Name</p>
                     <p class="card-text text-center"><strong>Cena: @element.DefaultPrice.ToString("C2")</strong></p>
-                    <a href="" type="button" class="btn btn-primary" style="float: bottom">Do Koszyka</a>
+                    <a href="@Url.Action("AddToCart")" type="button" class="btn btn-primary" style="float: bottom" id="@(element.Id)">Do Koszyka</a>
                 </div>
             </div>
         </div>
     }
 </div>
 <div class="container hide" id="travel-details-modal">
+<div class="container hide" id="modal">
+
+</div>
 </div>

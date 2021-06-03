@@ -23,6 +23,8 @@ namespace Codecool.CodecoolShop.Controllers
         public ProductService ProductService { get; set; }
         public TravelAgencyService TravelAgencyService { get; set; }
 
+        //public Cart cart = new Cart();
+        
         public ProductController(ILogger<ProductController> logger)
         {
             _logger = logger;
@@ -38,7 +40,7 @@ namespace Codecool.CodecoolShop.Controllers
         public IActionResult Index()
         {
             var shopModel = new ShopModel(ProductService);
-
+            var cart = SessionHelper.GetObjectFromJson<List<CartItem>>(HttpContext.Session, "cart");
             //var products = ProductService.GetProductsForCategory(1);
             //ShopModel shopModel= new ShopModel() {ProductsList = products.ToList()};
             //FillListsToFilter(shopModel, products);
@@ -122,8 +124,7 @@ namespace Codecool.CodecoolShop.Controllers
 
             if (anOptionIsSelected)
             {
-                
-            
+
             var productsFromCategory = ProductService.GetProductsForCategory(shopModel.ProductCategoryId);
             shopModel.ConfigureClassPropertiesCategory(ProductService, productsFromCategory);
             return View("Index", shopModel);
@@ -164,6 +165,33 @@ namespace Codecool.CodecoolShop.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+        
+        [Route("/cart")]
+        public IActionResult ReviewCart()
+        {
+            return View("Cart");
+        }
+
+        public void AddToCart(int id)
+        {
+            Console.WriteLine(id);
+            Cart cart = SessionHelper.GetObjectFromJson<Cart>(HttpContext.Session, "cart");
+            Product product = ProductService.GetProductForId(id);
+            CartItem cartItem = new CartItem(product, 1);
+            if (cart == null)
+            {
+                cart = new Cart();
+                cart.CartItems = new List<CartItem>();
+            }
+            cart.CartItems.Add(cartItem);
+            SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
+            Console.WriteLine(cart.CartItems.Count());
+            foreach (var element in cart.CartItems)
+            {
+                Console.WriteLine(element.Product.Name);
+            }
+            
         }
     }
 }
