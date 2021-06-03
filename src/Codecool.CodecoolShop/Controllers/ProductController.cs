@@ -169,7 +169,8 @@ namespace Codecool.CodecoolShop.Controllers
         [Route("/cart")]
         public IActionResult ReviewCart()
         {
-            return View("Cart");
+            
+            return View("Cart", SessionHelper.GetObjectFromJson<Cart>(HttpContext.Session, "cart"));
         }
 
         public void AddToCart(int id)
