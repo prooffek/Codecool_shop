@@ -164,5 +164,11 @@ namespace Codecool.CodecoolShop.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+        
+        [Route("/cart")]
+        public IActionResult ReviewCart()
+        {
+            return View("Cart");
+        }
     }
 }
