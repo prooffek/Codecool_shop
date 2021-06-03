@@ -6,6 +6,7 @@
 "use strict"
 
 const TravelDetailsModal = document.querySelector("#travel-details-modal");
+const CartDetails = document.getElementById("modal");
 let clickedElement;
 
 SetOnClickListener();
@@ -14,12 +15,20 @@ function SetOnClickListener() {
     document.addEventListener("click", ManageOnClickEvents);
 }
 
+
 function ManageOnClickEvents(event) {
     clickedElement = event.target;
+    event.preventDefault();
     
     if (clickedElement.classList.contains("card-title")) {
         ShowTravelDetailsModal();
-    } else {
+        
+    }
+    else if (clickedElement.classList.contains("btn-primary"))
+    {
+        AddToCart();
+    }
+    else {
         HideModal();
         RemoveModalText();
     }
@@ -30,6 +39,27 @@ function ShowTravelDetailsModal(){
     GetProductData(GetProductId());
     ShowModal();
 }
+
+function FillCartModal(title) {
+    CartDetails.insertAdjacentHTML("afterbegin", `
+        <h2>Dodałeś do koszyka produkt :</h2>
+        <br>
+        <h3 id="modal-travel-title">${title}</h3>
+        <br>
+        <h2>W celu finalizacji zakupu przejdż do zakładki "Koszyk"</h2>  
+    `)
+}
+
+function AddToCart() {
+    AddProductToCart(clickedElement.id);
+    SetCartModalAttributes();
+    const title = clickedElement.parentNode.childNodes.item(1).textContent;
+    FillCartModal(title);
+    console.log(title);
+    CartDetails.classList.remove("hide");
+    
+}
+
 
 function GetProductId(){
     return clickedElement.dataset.id;
@@ -49,6 +79,22 @@ function SetTravelModalAttributes(){
     );
 }
 
+function SetCartModalAttributes(title){
+    CartDetails.setAttribute("style",
+        `height: auto; 
+        width: 100%; 
+        position: fixed; 
+        top: 17%; 
+        left: 15%;
+        padding: 5vh;
+        background-color: white; 
+        border: black solid 1px;
+        border-radius: 10px;`
+    );
+    
+}
+
+
 function ShowModal(){
     TravelDetailsModal.classList.remove("hide");
 }
@@ -56,6 +102,8 @@ function ShowModal(){
 function HideModal() {
     TravelDetailsModal.classList.add("hide");
     TravelDetailsModal.removeAttribute("style");
+    CartDetails.classList.add("hide");
+    CartDetails.removeAttribute("style");
 }
 
 function GetProductData(productId){
@@ -66,6 +114,14 @@ function GetProductData(productId){
     })
         .then(response => response.json())
         .then(fetchResponse => FillInTravelModal(fetchResponse))
+}
+
+function AddProductToCart(productId){
+    const URL = `/Product/AddToCart/${productId}`;
+    fetch(URL, {
+        method: "POST",
+        credentials: "same-origin"
+    })
 }
 
 function FillInTravelModal(product){
@@ -85,5 +141,9 @@ function RemoveModalText(){
     let childrenEl = TravelDetailsModal.childNodes;
     while (childrenEl.length > 0){
         childrenEl[0].remove();
+    };
+    let childrenElCart = CartDetails.childNodes;
+    while (childrenElCart.length > 0){
+        childrenElCart[0].remove();
     };
 }
