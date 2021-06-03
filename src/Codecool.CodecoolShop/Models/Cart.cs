@@ -5,7 +5,7 @@ namespace Codecool.CodecoolShop.Models
 {
     public class Cart
     {
-        public List<CartItem> CartItems { get; set; } 
+        public List<CartItem> CartItems { get; set; } = new List<CartItem>();
         public decimal Sum { get; set; }
         
         public void AddCartItem(CartItem cartItem)

@@ -1,5 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Cart";
+    //@{Model.DecrementCartItemQuantity(item);}
+    //@{Model.IncrementCartItemQuantity(item);}
 }
 @{
     @model Cart
@@ -23,9 +25,9 @@
                         <div class="row">@item.Product.Description</div>
                     </div>
                     <div class="col">
-                        <a @{Model.DecrementCartItemQuantity(item);} @Url.Action("ReviewCart", "Product", @Model)>-</a>
+                        <a @Url.Action("ReviewCart", "Product", @Model)>-</a>
                         <a href="#" class="border">@item.Quantity</a>
-                        <a @{Model.IncrementCartItemQuantity(item);} @Url.Action("ReviewCart", "Product", @Model)>+</a>
+                        <a @Url.Action("ReviewCart", "Product", @Model)>+</a>
                     </div>
                     <div class="col"> @item.Product.DefaultPrice zł <span class="close">&#10005;</span></div>
                     <div class="col"> @item.Sum zł <span class="close">&#10005;</span></div>
