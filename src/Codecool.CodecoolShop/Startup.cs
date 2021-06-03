@@ -27,6 +27,7 @@ namespace Codecool.CodecoolShop
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddSession();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,6 +47,7 @@ namespace Codecool.CodecoolShop
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseSession();
 
             app.UseAuthorization();
 
@@ -63,7 +65,8 @@ namespace Codecool.CodecoolShop
         {
             IProductDao productDataStore = ProductDaoMemory.GetInstance();
             IProductCategoryDao productCategoryDataStore = ProductCategoryDaoMemory.GetInstance();
-
+            
+            
             /*
             ISupplierDao supplierDataStore = SupplierDaoMemory.GetInstance();
 
@@ -81,7 +84,7 @@ namespace Codecool.CodecoolShop
             ITravelAgencyDao travelAgencyDataStore = TravelAgencyDaoMemory.GetInstance();
             ICountryDao countryDataStore = CountryDaoMemory.GetInstance();
             
-
+            
             TravelAgency rainbow = new TravelAgency(){Name = "Rainbow", Description = "Biuro podróży Rainbow to bogata oferta wakacji samolotem, autokarem wycieczek objazdowych oraz wczasów za granicą."};
             travelAgencyDataStore.Add(rainbow);
             TravelAgency itaka = new TravelAgency(){Name = "Itaka", Description = "Biuro Podróży ITAKA - organizuje wczasy zagraniczne i wycieczki objazdowe samolotem i autokarem."};
