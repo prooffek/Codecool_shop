@@ -200,6 +200,7 @@ namespace Codecool.CodecoolShop.Controllers
             var cart = SessionHelper.GetObjectFromJson<Cart>(HttpContext.Session, "cart");
             CartItem cartItem = cart.CartItems[index];
             cart.DecrementCartItemQuantity(cartItem);
+            cartItem.CountSum();
             cart.CountSum();
             SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
             return View("Cart", cart);
@@ -210,6 +211,7 @@ namespace Codecool.CodecoolShop.Controllers
             var cart = SessionHelper.GetObjectFromJson<Cart>(HttpContext.Session, "cart");
             CartItem cartItem = cart.CartItems[index];
             cart.IncrementCartItemQuantity(cartItem);
+            cartItem.CountSum();
             cart.CountSum();
             SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
             return View("Cart", cart);
