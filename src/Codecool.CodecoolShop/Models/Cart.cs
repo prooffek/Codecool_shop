@@ -5,7 +5,7 @@ namespace Codecool.CodecoolShop.Models
 {
     public class Cart
     {
-        public List<CartItem> CartItems { get; set; } 
+        public List<CartItem> CartItems { get; set; } = new List<CartItem>();
         public decimal Sum { get; set; }
         
         public void AddCartItem(CartItem cartItem)
@@ -21,6 +21,29 @@ namespace Codecool.CodecoolShop.Models
         public void CountSum()
         {
             Sum = CartItems.Sum(x => x.Sum);
+        }
+
+        public void EditCartItemQuantity(CartItem cartItem, int newQuantity)
+        {
+            if (CartItems.Contains(cartItem) && newQuantity > 0) 
+                cartItem.EditQuantity(newQuantity);
+            else if (CartItems.Contains(cartItem)) //newQuantity is below zero
+                RemoveCartItem(cartItem);
+        }
+
+        public void DecrementCartItemQuantity(CartItem cartItem)
+        {
+            if (CartItems.Contains(cartItem))
+                cartItem.DecrementQuantity();
+
+            if (cartItem.Quantity <= 0)
+                RemoveCartItem(cartItem);
+        }
+
+        public void IncrementCartItemQuantity(CartItem cartItem)
+        {
+            if (CartItems.Contains(cartItem))
+                cartItem.IncrementQuantity();
         }
     }
 }

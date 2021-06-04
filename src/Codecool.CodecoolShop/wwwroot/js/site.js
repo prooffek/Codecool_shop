@@ -18,13 +18,13 @@ function SetOnClickListener() {
 
 function ManageOnClickEvents(event) {
     clickedElement = event.target;
-    event.preventDefault();
+    //event.preventDefault();
     
     if (clickedElement.classList.contains("card-title")) {
         ShowTravelDetailsModal();
         
     }
-    else if (clickedElement.classList.contains("btn-primary"))
+    else if (clickedElement.classList.contains("add-btn"))
     {
         AddToCart();
     }

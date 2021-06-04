@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using Codecool.CodecoolShop.Models;
 using Codecool.CodecoolShop.Search;
 using Codecool.CodecoolShop.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Codecool.CodecoolShop.Controllers
@@ -39,11 +40,11 @@ namespace Codecool.CodecoolShop.Controllers
         public IActionResult Index()
         {
             var shopModel = new ShopModel(ProductService);
-            var cart = SessionHelper.GetObjectFromJson<List<CartItem>>(HttpContext.Session, "cart");
+            var cart = SessionHelper.GetObjectFromJson<Cart>(HttpContext.Session, "cart");
             //var products = ProductService.GetProductsForCategory(1);
             //ShopModel shopModel= new ShopModel() {ProductsList = products.ToList()};
             //FillListsToFilter(shopModel, products);
-            
+
             return View(shopModel);
         }
 
@@ -123,10 +124,9 @@ namespace Codecool.CodecoolShop.Controllers
 
             if (anOptionIsSelected)
             {
-
-            var productsFromCategory = ProductService.GetProductsForCategory(shopModel.ProductCategoryId);
-            shopModel.ConfigureClassPropertiesCategory(ProductService, productsFromCategory);
-            return View("Index", shopModel);
+                var productsFromCategory = ProductService.GetProductsForCategory(shopModel.ProductCategoryId);
+                shopModel.ConfigureClassPropertiesCategory(ProductService, productsFromCategory);
+                return View("Index", shopModel);
             }
 
             FilteredByTravelAgency(shopModel);
@@ -169,8 +169,9 @@ namespace Codecool.CodecoolShop.Controllers
         [Route("/cart")]
         public IActionResult ReviewCart()
         {
-            
-            return View("Cart", SessionHelper.GetObjectFromJson<Cart>(HttpContext.Session, "cart"));
+            var cart = SessionHelper.GetObjectFromJson<Cart>(HttpContext.Session, "cart");
+            if (cart == null) cart = new Cart();
+            return View("Cart", cart);
         }
 
         public void AddToCart(int id)
@@ -191,7 +192,24 @@ namespace Codecool.CodecoolShop.Controllers
             {
                 Console.WriteLine(element.Product.Name);
             }
-            
+        }
+
+        public IActionResult DecreaseProductsQuantity(int index)
+        {
+            var cart = SessionHelper.GetObjectFromJson<Cart>(HttpContext.Session, "cart");
+            CartItem cartItem = cart.CartItems[index];
+            cart.DecrementCartItemQuantity(cartItem);
+            SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
+            return View("Cart", cart);
+        }
+
+        public IActionResult IncreaseProductsQuantity(int index)
+        {
+            var cart = SessionHelper.GetObjectFromJson<Cart>(HttpContext.Session, "cart");
+            CartItem cartItem = cart.CartItems[index];
+            cart.IncrementCartItemQuantity(cartItem);
+            SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
+            return View("Cart", cart);
         }
     }
 }
