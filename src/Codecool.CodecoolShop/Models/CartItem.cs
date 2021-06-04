@@ -28,5 +28,10 @@ namespace Codecool.CodecoolShop.Models
             int newQuantity = Quantity - num;
             Quantity = newQuantity < 0 ? 0 : newQuantity;
         }
+
+        public void EditQuantity(int newQuantity)
+        {
+            Quantity = newQuantity < 0 ? 0 : newQuantity;
+        }
     }
 }

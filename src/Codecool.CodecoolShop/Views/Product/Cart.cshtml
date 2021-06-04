@@ -1,0 +1,53 @@
+﻿@{
+    ViewData["Title"] = "Cart";
+    //@{Model.DecrementCartItemQuantity(item);}
+    //@{Model.IncrementCartItemQuantity(item);}
+}
+@{
+    @model Cart
+}
+@section Styles
+{
+    <link rel="stylesheet" href="~/css/cart.css" />
+}
+<div class="card">
+    <div class="row">
+        <div class="col-md-8 cart">
+            <div class="title">
+                <div class="row">
+                    <div class="col">
+                        <h4><b>Koszyk</b></h4>
+                    </div>
+                </div>
+            </div>
+            @foreach (var item in Model.CartItems)
+            {
+                <div class="row main align-items-center">
+                    <div class="col-2"><img class="img-fluid" src="/img/@(item.Product.ImgName).png"></div>
+                    <div class="col">
+                        <div class="row text-muted">@item.Product.Name</div>
+                    </div>
+                    <div class="col">
+                        <a href="@Url.Action("DecreaseProductsQuantity", "Product", new {index = Model.CartItems.IndexOf(item)})">–</a>
+                        <a href="#" class="border">@item.Quantity</a>
+                        <a href="@Url.Action("IncreaseProductsQuantity", "Product", new {index = Model.CartItems.IndexOf(item)})">+</a>
+                    </div>
+                    <div class="col"> @item.Product.DefaultPrice zł </div>
+                    <div class="col"> @item.Sum zł <a href=@Url.Action("RemoveProductFromCart", "Product", new {index = Model.CartItems.IndexOf(item)})><span class="close">&#10005;</span></a></div>
+                </div>
+            }
+            
+            <div class="back-to-shop"><a href=@Url.Action("Index")>&leftarrow;</a><span class="text-muted">Powrót do sklepu</span></div>
+        </div>
+        <div class="col-md-4 summary">
+            <div>
+                <h5><b>Podsumowanie</b></h5>
+            </div>
+            <hr>
+            <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
+                <div class="col">SUMA</div>
+                <div class="col text-right">@Model.Sum zł</div>
+            </div> <button class="btn">CHECKOUT</button>
+        </div>
+    </div>
+</div>
