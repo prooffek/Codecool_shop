@@ -226,7 +226,16 @@ namespace Codecool.CodecoolShop.Controllers
 
         public IActionResult Checkout()
         {
-            return View("Checkout");
+            var checkout = SessionHelper.GetObjectFromJson<Checkout>(HttpContext.Session, "checkout") ?? new Checkout();
+            SessionHelper.SetObjectAsJson(HttpContext.Session, "checkout", checkout);
+            
+            return View("Checkout", checkout);
+        }
+
+        public IActionResult GetCheckoutData(Checkout checkout)
+        {
+            SessionHelper.SetObjectAsJson(HttpContext.Session, "checkout", checkout);
+            return View("Checkout", checkout);
         }
     }
 }
