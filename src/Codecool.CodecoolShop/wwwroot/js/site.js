@@ -18,11 +18,9 @@ function SetOnClickListener() {
 
 function ManageOnClickEvents(event) {
     clickedElement = event.target;
-    //event.preventDefault();
     
     if (clickedElement.classList.contains("card-title")) {
         ShowTravelDetailsModal();
-        
     }
     else if (clickedElement.classList.contains("add-btn"))
     {
@@ -35,7 +33,7 @@ function ManageOnClickEvents(event) {
 }
 
 function ShowTravelDetailsModal(){
-    SetTravelModalAttributes();
+    SetModalAttributes();
     GetProductData(GetProductId());
     ShowModal();
 }
@@ -55,17 +53,14 @@ function AddToCart() {
     SetCartModalAttributes();
     const title = clickedElement.parentNode.childNodes.item(1).textContent;
     FillCartModal(title);
-    console.log(title);
     CartDetails.classList.remove("hide");
-    
 }
-
 
 function GetProductId(){
     return clickedElement.dataset.id;
 }
 
-function SetTravelModalAttributes(){
+function SetModalAttributes(){
     TravelDetailsModal.setAttribute("style",
         `height: auto; 
         width: 100%; 
@@ -78,8 +73,7 @@ function SetTravelModalAttributes(){
         border-radius: 10px;`
     );
 }
-
-function SetCartModalAttributes(title){
+function SetCartModalAttributes(){
     CartDetails.setAttribute("style",
         `height: auto; 
         width: 100%; 
@@ -91,9 +85,7 @@ function SetCartModalAttributes(title){
         border: black solid 1px;
         border-radius: 10px;`
     );
-    
 }
-
 
 function ShowModal(){
     TravelDetailsModal.classList.remove("hide");

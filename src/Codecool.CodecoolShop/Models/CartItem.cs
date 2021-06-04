@@ -13,7 +13,7 @@ namespace Codecool.CodecoolShop.Models
             CountSum();
         }
         
-        private void CountSum()
+        public void CountSum()
         {
             Sum = Product.DefaultPrice * Quantity;
         }

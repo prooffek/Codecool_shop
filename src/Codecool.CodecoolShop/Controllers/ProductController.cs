@@ -22,8 +22,6 @@ namespace Codecool.CodecoolShop.Controllers
         private readonly ILogger<ProductController> _logger;
         public ProductService ProductService { get; set; }
         public TravelAgencyService TravelAgencyService { get; set; }
-
-        //public Cart cart = new Cart();
         
         public ProductController(ILogger<ProductController> logger)
         {
@@ -40,65 +38,11 @@ namespace Codecool.CodecoolShop.Controllers
         public IActionResult Index()
         {
             var shopModel = new ShopModel(ProductService);
-            var cart = SessionHelper.GetObjectFromJson<Cart>(HttpContext.Session, "cart");
-            //var products = ProductService.GetProductsForCategory(1);
-            //ShopModel shopModel= new ShopModel() {ProductsList = products.ToList()};
-            //FillListsToFilter(shopModel, products);
+            // var cart = SessionHelper.GetObjectFromJson<Cart>(HttpContext.Session, "cart");
 
             return View(shopModel);
         }
-
-        private void FillListsToFilter(ShopModel shopModel, IEnumerable<Product> products )
-        {
-            // shopModel.CountriesList = GetNamesToPrint(products, "Country");// do zmiany kiedy będzie object country
-            shopModel.CategoriesList = GetObjectsToFilterCategories(products);
-            shopModel.TravelAgenciesList = GetObjectsToFilterAgency(products);
-        }
-
-        private List<TravelAgency> GetObjectsToFilterAgency(IEnumerable<Product> products)
-        {
-            List<TravelAgency> travelAgenciesList = new List<TravelAgency>();
-            foreach (var product in products)
-            {
-                if (!travelAgenciesList.Contains(product.TravelAgency))
-                {
-                    travelAgenciesList.Add(product.TravelAgency);
-                }
-            }
-
-            return travelAgenciesList;
-        }
-
-        private List<ProductCategory> GetObjectsToFilterCategories(IEnumerable<Product> products)
-        {            
-            List<ProductCategory> produtCategoriesList = new List<ProductCategory>();
-            foreach (var product in products)
-            {
-                if (!produtCategoriesList.Contains(product.ProductCategory))
-                {
-                    produtCategoriesList.Add(product.ProductCategory);
-                }
-            }
-
-            return produtCategoriesList;
-        }
-        //  private List<string> GetObjectsToFilterCountry(IEnumerable<Product> products)
-        // {
-        //     List<Country> countryList = new List<string>();
-        //     
-        //     foreach (var element in products)
-        //     {
-        //         var propertyValue = element.GetType().GetProperty(name).GetValue(element).ToString();
-        //         if(!NamesList.Contains(propertyValue))
-        //         {
-        //             NamesList.Add(propertyValue);
-        //         }
-        //     }
-        //
-        //     return NamesList;
-        // }
-
-
+        
         public IActionResult Privacy()
         {
             return View();
@@ -177,7 +121,6 @@ namespace Codecool.CodecoolShop.Controllers
 
         public void AddToCart(int id)
         {
-            Console.WriteLine(id);
             Cart cart = SessionHelper.GetObjectFromJson<Cart>(HttpContext.Session, "cart");
             Product product = ProductService.GetProductForId(id);
             CartItem cartItem = new CartItem(product, 1);
@@ -188,11 +131,6 @@ namespace Codecool.CodecoolShop.Controllers
             }
             cart.CartItems.Add(cartItem);
             SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
-            Console.WriteLine(cart.CartItems.Count());
-            foreach (var element in cart.CartItems)
-            {
-                Console.WriteLine(element.Product.Name);
-            }
         }
 
         public IActionResult DecreaseProductsQuantity(int index)
@@ -200,6 +138,7 @@ namespace Codecool.CodecoolShop.Controllers
             var cart = SessionHelper.GetObjectFromJson<Cart>(HttpContext.Session, "cart");
             CartItem cartItem = cart.CartItems[index];
             cart.DecrementCartItemQuantity(cartItem);
+            cartItem.CountSum();
             cart.CountSum();
             SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
             return View("Cart", cart);
@@ -210,6 +149,7 @@ namespace Codecool.CodecoolShop.Controllers
             var cart = SessionHelper.GetObjectFromJson<Cart>(HttpContext.Session, "cart");
             CartItem cartItem = cart.CartItems[index];
             cart.IncrementCartItemQuantity(cartItem);
+            cartItem.CountSum();
             cart.CountSum();
             SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
             return View("Cart", cart);
@@ -232,10 +172,39 @@ namespace Codecool.CodecoolShop.Controllers
             return View("Checkout", checkout);
         }
 
-        public IActionResult GetCheckoutData(Checkout checkout)
+        public void SaveCheckoutData(Checkout checkout)
         {
             SessionHelper.SetObjectAsJson(HttpContext.Session, "checkout", checkout);
-            return View("Checkout", checkout);
+        }
+
+        [Route("/payment")]
+        public IActionResult Payment(Checkout checkout)
+        {
+            SaveCheckoutData(checkout);
+            
+            var cart = SessionHelper.GetObjectFromJson<Cart>(HttpContext.Session, "cart");
+            if (cart.Sum == 0)
+            {
+                Payment payment = new Payment();
+                payment.CardHolder = checkout.Name ?? "Jan Kowalski";
+                return View("Payment", payment);
+            }
+            else
+            {
+                Payment payment = new Payment(cart.Sum);
+                payment.CardHolder = checkout.Name ?? "Jan Kowalski";
+                return View("Payment", payment);
+            }
+            
+        }
+
+        public IActionResult CheckPayment(Payment payment)
+        {
+            if (payment.IsDataCorrect())
+            {
+                return View("CorrectOrder");
+            }
+            return View("FalseOrder");
         }
     }
 }
