@@ -1,0 +1,42 @@
+﻿@using Codecool.CodecoolShop.Controllers
+@{
+    ViewData["Title"] = "Home Page";
+}
+@{
+    
+@model Payment
+}
+
+
+<div class="row"> <span class="header">Payment</span>
+    <div class="icons"> <img src="https://img.icons8.com/color/48/000000/visa.png" /> <img src="https://img.icons8.com/color/48/000000/mastercard-logo.png" /> <img src="https://img.icons8.com/color/48/000000/maestro.png" /> </div>
+    <br>
+</div>
+<br>
+<div>
+    <h3>Całkowita kwota płatności wynosi : @Model.AmountToPay</h3>
+    <br><br>
+</div>
+
+@using (Html.BeginForm("CheckPayment", "Product", FormMethod.Post))
+{
+    <span>Cardholder's name:</span>
+    @Html.EditorFor(x=>x.CardHolder,new { htmlAttributes = new { placeholder = "Jan Kowalski" }})
+    
+    <span>Card Number:</span>
+    @Html.EditorFor(x=>x.CardNumber, new { htmlAttributes = new {  placeholder="0125 6780 4567 9909"}})
+    <br>
+    <br>
+    <div class="row">
+        <div class="col-4">
+            <span>Expiry date:</span>
+            @Html.EditorFor(x=>x.ExpiryDate,new { htmlAttributes = new {placeholder="YY/MM"}} )
+        </div>
+        <br>
+        <div class="col-4">
+            <span>CVV:</span>
+            @Html.EditorFor(x=>x.CvvNumber)
+        </div>
+        <input type="submit" value="Wyślij" class="btn-primary"/>
+    </div>
+}

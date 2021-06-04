@@ -225,5 +225,30 @@ namespace Codecool.CodecoolShop.Controllers
             SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
             return View("Cart", cart);
         }
+        [Route("/payment")]
+        public IActionResult Payment()
+        {
+            var cart = SessionHelper.GetObjectFromJson<Cart>(HttpContext.Session, "cart");
+            if (cart.Sum == 0)
+            {
+                Payment payment = new Payment();
+                return View("Payment", payment);
+            }
+            else
+            {
+                Payment payment = new Payment(cart.Sum);
+                return View("Payment", payment);
+            }
+            
+        }
+
+        public IActionResult CheckPayment(Payment payment)
+        {
+            if (payment.IsDataCorrect())
+            {
+                return View("CorrectOrder");
+            }
+            return View("FalseOrder");
+        }
     }
 }
