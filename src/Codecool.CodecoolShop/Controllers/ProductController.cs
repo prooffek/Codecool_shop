@@ -211,5 +211,10 @@ namespace Codecool.CodecoolShop.Controllers
             SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
             return View("Cart", cart);
         }
+
+        public IActionResult Checkout()
+        {
+            return View("Checkout");
+        }
     }
 }
