@@ -50,7 +50,7 @@ function FillCartModal(title) {
 
 function AddToCart() {
     AddProductToCart(clickedElement.id);
-    SetModalAttributes();
+    SetCartModalAttributes();
     const title = clickedElement.parentNode.childNodes.item(1).textContent;
     FillCartModal(title);
     CartDetails.classList.remove("hide");
@@ -62,6 +62,19 @@ function GetProductId(){
 
 function SetModalAttributes(){
     TravelDetailsModal.setAttribute("style",
+        `height: auto; 
+        width: 100%; 
+        position: fixed; 
+        top: 17%; 
+        left: 15%;
+        padding: 5vh;
+        background-color: white; 
+        border: black solid 1px;
+        border-radius: 10px;`
+    );
+}
+function SetCartModalAttributes(){
+    CartDetails.setAttribute("style",
         `height: auto; 
         width: 100%; 
         position: fixed; 
