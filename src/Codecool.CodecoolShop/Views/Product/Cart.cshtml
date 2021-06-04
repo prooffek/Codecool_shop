@@ -25,9 +25,9 @@
                         <div class="row">@item.Product.Description</div>
                     </div>
                     <div class="col">
-                        <a @Url.Action("ReviewCart", "Product", @Model)>-</a>
+                        <a href="@Url.Action("DecreaseProductsQuantity", "Product", new {index = Model.CartItems.IndexOf(item)})">–</a>
                         <a href="#" class="border">@item.Quantity</a>
-                        <a @Url.Action("ReviewCart", "Product", @Model)>+</a>
+                        <a href="@Url.Action("IncreaseProductsQuantity", "Product", new {index = Model.CartItems.IndexOf(item)})">+</a>
                     </div>
                     <div class="col"> @item.Product.DefaultPrice zł <span class="close">&#10005;</span></div>
                     <div class="col"> @item.Sum zł <span class="close">&#10005;</span></div>

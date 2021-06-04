@@ -193,5 +193,23 @@ namespace Codecool.CodecoolShop.Controllers
                 Console.WriteLine(element.Product.Name);
             }
         }
+
+        public IActionResult DecreaseProductsQuantity(int index)
+        {
+            var cart = SessionHelper.GetObjectFromJson<Cart>(HttpContext.Session, "cart");
+            CartItem cartItem = cart.CartItems[index];
+            cart.DecrementCartItemQuantity(cartItem);
+            SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
+            return View("Cart", cart);
+        }
+
+        public IActionResult IncreaseProductsQuantity(int index)
+        {
+            var cart = SessionHelper.GetObjectFromJson<Cart>(HttpContext.Session, "cart");
+            CartItem cartItem = cart.CartItems[index];
+            cart.IncrementCartItemQuantity(cartItem);
+            SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
+            return View("Cart", cart);
+        }
     }
 }

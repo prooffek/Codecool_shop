@@ -14,7 +14,7 @@
             @using (Html.BeginForm("FilteredByTravelAgency", "Product", FormMethod.Post))
             {
                 @Html.DropDownListFor(x => x.TravelAgencyId, Model.TravelAgencies, "Wybierz biuro podróży")
-                <input type="submit", value="Filtruj", class="btn-primary"/>
+                <input type="submit" value="Filtruj" class="btn-primary"/>
             }
         </div>
         <div class="col-lg-3 col-lg-3" style="display: inline-block; height: 10vh; width: 100%;">
@@ -50,14 +50,11 @@
                     <p class="card-text">Kategoria: @element.ProductCategory.Name</p>
                     <p class="card-text">Biuro podróży: @element.TravelAgency.Name</p>
                     <p class="card-text text-center"><strong>Cena: @element.DefaultPrice.ToString("C2")</strong></p>
-                    <a href="@Url.Action("AddToCart")" type="button" class="btn btn-primary" style="float: bottom" id="@(element.Id)">Do Koszyka</a>
+                    <a type="button" class="btn btn-primary add-btn" style="float: bottom" id="@(element.Id)">Do Koszyka</a>
                 </div>
             </div>
         </div>
     }
 </div>
-<div class="container hide" id="travel-details-modal">
-<div class="container hide" id="modal">
-
-</div>
-</div>
+<div class="container hide" id="travel-details-modal"></div>
+<div class="container hide" id="modal"></div>
