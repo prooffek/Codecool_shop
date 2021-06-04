@@ -9,20 +9,14 @@ namespace Codecool.CodecoolShop.Models
 {
     public class ShopModel
     {
-        public List<Product> ProductsList;
         public List<Country> CountriesList { get; set; }
-        public List<TravelAgency> TravelAgenciesList { get; set; }
-        public List<ProductCategory> CategoriesList { get; set; }
-        
         public IEnumerable<Product> Products { get; set; }
-
         public IEnumerable<Product> AllProducts { get; set; }
         public List<IFilterable> AgenciesOptions { get; private set; }
         public SelectList TravelAgencies { get; private set; }
         public int TravelAgencyId { get; set; }
         public SelectList Countries { get; private set; }
         public int CountryId { get; set; }
-        
         public int ProductCategoryId { get; set; }
         public SelectList Categories { get; set; }
         public List<IFilterable> CategoriesOptions { get; set; }
@@ -50,12 +44,12 @@ namespace Codecool.CodecoolShop.Models
         public void ConfigureClassProperties(ProductService productService, IEnumerable<Product> selectedProducts)
         {
             Products = selectedProducts;
-            var allProducts = productService.GetProductsForCategory(1);
-            AgenciesOptions = new TravelAgency().GetSelectOptions(allProducts);
+            var allProducts = productService.GetProductsForCategory(1); //prop
+            AgenciesOptions = new TravelAgency().GetSelectOptions(allProducts); //prop
             TravelAgencies = new SelectList(AgenciesOptions, "Id", "Name");
-            CountriesList = productService.GetAllCountries().ToList();
-            Countries = new SelectList(CountriesList, "Id", "Name");
-            CategoriesOptions = new ProductCategory().GetSelectOptions(Products);
+            CountriesList = productService.GetAllCountries().ToList(); //prop
+            Countries = new SelectList(CountriesList, "Id", "Name"); //prop
+            CategoriesOptions = new ProductCategory().GetSelectOptions(Products); //prop
             Categories = new SelectList(CategoriesOptions, "Id", "Name");
         }
         public void ConfigureClassPropertiesCategory(ProductService productService, IEnumerable<Product> selectedProducts)
