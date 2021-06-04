@@ -171,6 +171,7 @@ namespace Codecool.CodecoolShop.Controllers
         {
             var cart = SessionHelper.GetObjectFromJson<Cart>(HttpContext.Session, "cart");
             if (cart == null) cart = new Cart();
+            cart.CountSum();
             return View("Cart", cart);
         }
 
@@ -199,6 +200,7 @@ namespace Codecool.CodecoolShop.Controllers
             var cart = SessionHelper.GetObjectFromJson<Cart>(HttpContext.Session, "cart");
             CartItem cartItem = cart.CartItems[index];
             cart.DecrementCartItemQuantity(cartItem);
+            cart.CountSum();
             SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
             return View("Cart", cart);
         }
@@ -208,6 +210,16 @@ namespace Codecool.CodecoolShop.Controllers
             var cart = SessionHelper.GetObjectFromJson<Cart>(HttpContext.Session, "cart");
             CartItem cartItem = cart.CartItems[index];
             cart.IncrementCartItemQuantity(cartItem);
+            cart.CountSum();
+            SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
+            return View("Cart", cart);
+        }
+
+        public IActionResult RemoveProductFromCart(int index)
+        {
+            var cart = SessionHelper.GetObjectFromJson<Cart>(HttpContext.Session, "cart");
+            cart.CartItems.RemoveAt(index);
+            cart.CountSum();
             SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
             return View("Cart", cart);
         }
