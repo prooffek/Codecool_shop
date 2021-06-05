@@ -163,6 +163,49 @@ namespace Codecool.CodecoolShop.Controllers
             SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
             return View("Cart", cart);
         }
+
+        public IActionResult Checkout()
+        {
+            var checkout = SessionHelper.GetObjectFromJson<Checkout>(HttpContext.Session, "checkout") ?? new Checkout();
+            SessionHelper.SetObjectAsJson(HttpContext.Session, "checkout", checkout);
+            
+            return View("Checkout", checkout);
+        }
+
+        public void SaveCheckoutData(Checkout checkout)
+        {
+            SessionHelper.SetObjectAsJson(HttpContext.Session, "checkout", checkout);
+        }
+
+        [Route("/payment")]
+        public IActionResult Payment(Checkout checkout)
+        {
+            SaveCheckoutData(checkout);
+            
+            var cart = SessionHelper.GetObjectFromJson<Cart>(HttpContext.Session, "cart");
+            if (cart.Sum == 0)
+            {
+                Payment payment = new Payment();
+                payment.CardHolder = checkout.Name ?? "Jan Kowalski";
+                return View("Payment", payment);
+            }
+            else
+            {
+                Payment payment = new Payment(cart.Sum);
+                payment.CardHolder = checkout.Name ?? "Jan Kowalski";
+                return View("Payment", payment);
+            }
+            
+        }
+
+        public IActionResult CheckPayment(Payment payment)
+        {
+            if (payment.IsDataCorrect())
+            {
+                return View("CorrectOrder");
+            }
+            return View("FalseOrder");
+        }
         
         [Route("/confirm")]
         public IActionResult OrderConfirm()

@@ -1,0 +1,60 @@
+@model Checkout
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>CHECKOUT</title>
+</head>
+<body>
+<div>
+    <h1>CHECKOUT</h1><br/>
+
+    @using (Html.BeginForm("Payment", "Product", FormMethod.Post))
+    {
+        <div>
+            @Html.Label("Imię i nazwisko:")<br/>
+            @Html.TextBox("Name")<br/>
+            
+            @Html.Label("Adres e-mail:")<br/>
+            @Html.TextBox("Email")<br/>
+            
+            @Html.Label("Numer telefonu:")<br/>
+            @Html.TextBox("PhoneNumber")<br/>
+        </div>
+        <br/>
+        <div>
+            <h2>Billing address</h2><br>
+            @Html.Label("Kraj:")<br/>
+            @Html.TextBoxFor(x => x.BillingAddress.Country)<br/>
+
+            @Html.Label("Miasto:")<br/>
+            @Html.TextBoxFor(x => x.BillingAddress.City)<br/>
+
+            @Html.Label("Kod pocztowy:")<br/>
+            @Html.TextBoxFor(x => x.BillingAddress.ZipCode)<br/>
+            
+            @Html.Label("Adres:")<br/>
+            @Html.TextBoxFor(x => x.BillingAddress.Address)<br/>
+        </div>
+        <br/>
+        <div>
+            <h2>Shipping address</h2><br>
+            @Html.Label("Kraj:")<br/>
+            @Html.TextBoxFor(x => x.ShippingAddress.Country)<br/>
+
+            @Html.Label("Miasto:")<br/>
+            @Html.TextBoxFor(x => x.ShippingAddress.City)<br/>
+
+            @Html.Label("Kod pocztowy:")<br/>
+            @Html.TextBoxFor(x => x.ShippingAddress.ZipCode)<br/>
+            
+            @Html.Label("Adres:")<br/>
+            @Html.TextBoxFor(x => x.ShippingAddress.Address)<br/>
+        </div>
+        <br/>
+        <button type="submit" class="btn btn-primary">Przejdź do płatności</button>
+    }
+</div>
+</body>
+</html>
