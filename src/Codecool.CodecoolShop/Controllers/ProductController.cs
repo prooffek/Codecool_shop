@@ -163,5 +163,14 @@ namespace Codecool.CodecoolShop.Controllers
             SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
             return View("Cart", cart);
         }
+        
+        [Route("/confirm")]
+        public IActionResult OrderConfirm()
+        { 
+            var cart = SessionHelper.GetObjectFromJson<Cart>(HttpContext.Session, "cart");
+            if (cart == null) cart = new Cart();
+            cart.CountSum();
+            return View("OrderConfirmation", cart);
+        }
     }
 }
