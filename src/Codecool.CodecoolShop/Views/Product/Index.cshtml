@@ -9,27 +9,46 @@
 <div class="container">
     <h4>Filters</h4>
     <div class="row">
-        <div class="col-lg-3 col-lg-3" style="display: inline-block; height: 10vh; width: 100%;">
-            @using (Html.BeginForm("FilteredByTravelAgency", "Product", FormMethod.Post))
-            {
+        @using (Html.BeginForm("Filter", "Product", FormMethod.Post))
+        {
+            <div class="col-lg-3 col-lg-3" style="display: inline-block; height: 10vh; width: 100%;">
                 @Html.DropDownListFor(x => x.TravelAgencyId, Model.TravelAgencies, "Wybierz biuro podróży")
-                <input type="submit" value="Filtruj" class="btn-primary"/>
-            }
-        </div>
-        <div class="col-lg-3 col-lg-3" style="display: inline-block; height: 10vh; width: 100%;">
-            @using (Html.BeginForm("FilteredByCategory", "Product", FormMethod.Post))
-            {
+            </div>
+            <div class="col-lg-3 col-lg-3" style="display: inline-block; height: 10vh; width: 100%;">
                 @Html.DropDownListFor(x => x.ProductCategoryId, Model.Categories, "Wybierz typ wycieczki")
-                <input type="submit", value="Filtruj", class="btn-primary"/>
-            }
-        </div>
-        <div class="col-lg-3 col-lg-3" style="display: inline-block; height: 10vh; width: 100%;">
-            @using (Html.BeginForm("FilteredByCountries", "Product", FormMethod.Post))
-            {
+            </div>
+            <div class="col-lg-3 col-lg-3" style="display: inline-block; height: 10vh; width: 100%;">
                 @Html.DropDownListFor(x => x.CountryId, Model.Countries, "Wybierz kraj")
-                <input type="submit", value="Filtruj", class="btn-primary"/>
-            }
-        </div>
+            </div>
+            <div class="col-lg-3 col-lg-3" style="display: inline-block; height: 10vh; width: 100%;">
+                <input type="submit" value="Filtruj" class="btn-primary"/>
+            </div>
+        }
+
+        @{
+            /*
+            <div class="col-lg-3 col-lg-3" style="display: inline-block; height: 10vh; width: 100%;">
+                @using (Html.BeginForm("FilteredByTravelAgency", "Product", FormMethod.Post))
+                {
+                    @Html.DropDownListFor(x => x.TravelAgencyId, Model.TravelAgencies, "Wybierz biuro podróży")
+                    <input type="submit" value="Filtruj" class="btn-primary"/>
+                }
+            </div>
+            <div class="col-lg-3 col-lg-3" style="display: inline-block; height: 10vh; width: 100%;">
+                @using (Html.BeginForm("FilteredByCategory", "Product", FormMethod.Post))
+                {
+                    @Html.DropDownListFor(x => x.ProductCategoryId, Model.Categories, "Wybierz typ wycieczki")
+                    <input type="submit", value="Filtruj", class="btn-primary"/>
+                }
+            </div>
+            <div class="col-lg-3 col-lg-3" style="display: inline-block; height: 10vh; width: 100%;">
+                @using (Html.BeginForm("FilteredByCountries", "Product", FormMethod.Post))
+                {
+                    @Html.DropDownListFor(x => x.CountryId, Model.Countries, "Wybierz kraj")
+                    <input type="submit", value="Filtruj", class="btn-primary"/>
+                }
+            </div>
+        */}
     </div>    
 </div>
 

@@ -22,6 +22,7 @@ namespace Codecool.CodecoolShop.Controllers
         private readonly ILogger<ProductController> _logger;
         public ProductService ProductService { get; set; }
         public TravelAgencyService TravelAgencyService { get; set; }
+        public FilterServices FilterServices { get; set; }
         
         public ProductController(ILogger<ProductController> logger)
         {
@@ -33,6 +34,8 @@ namespace Codecool.CodecoolShop.Controllers
             TravelAgencyService = new TravelAgencyService(
                 ProductDaoMemory.GetInstance(),
                 TravelAgencyDaoMemory.GetInstance());
+            FilterServices = new FilterServices(TravelAgencyService, ProductService);
+
         }
 
         public IActionResult Index()
@@ -48,6 +51,13 @@ namespace Codecool.CodecoolShop.Controllers
             return View();
         }
 
+        public IActionResult Filter(ShopModel shopModel)
+        {
+            shopModel = FilterServices.Filter(shopModel);
+            return View("Index", shopModel);
+        }
+        
+        /*
         public IActionResult FilteredByTravelAgency(ShopModel shopModel)
         {
             bool anOptionIsSelected = shopModel.TravelAgencyId != 0;
@@ -76,6 +86,7 @@ namespace Codecool.CodecoolShop.Controllers
             FilteredByTravelAgency(shopModel);
             return View("Index", new ShopModel(ProductService));
         }
+        */
 
         public IActionResult TravelDetails(int id)
         {
@@ -91,6 +102,7 @@ namespace Codecool.CodecoolShop.Controllers
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
 
+        /*
         public IActionResult FilteredByCountries(ShopModel shopModel)
         {
             int selectedValue = shopModel.CountryId;
@@ -105,6 +117,8 @@ namespace Codecool.CodecoolShop.Controllers
             return View("Index", new ShopModel(ProductService));
 
         }
+        */
+        
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });

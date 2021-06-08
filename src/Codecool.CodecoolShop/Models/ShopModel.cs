@@ -52,6 +52,7 @@ namespace Codecool.CodecoolShop.Models
             CategoriesOptions = new ProductCategory().GetSelectOptions(Products); //prop
             Categories = new SelectList(CategoriesOptions, "Id", "Name");
         }
+        /*
         public void ConfigureClassPropertiesCategory(ProductService productService, IEnumerable<Product> selectedProducts)
         {
             Products = selectedProducts;
@@ -62,5 +63,6 @@ namespace Codecool.CodecoolShop.Models
             CountriesList = productService.GetAllCountries().ToList();
             Countries = new SelectList(CountriesList, "Id", "Name");
         }
+        */
     }
 }
