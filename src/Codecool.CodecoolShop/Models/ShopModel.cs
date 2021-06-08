@@ -43,8 +43,9 @@ namespace Codecool.CodecoolShop.Models
 
         public void ConfigureClassProperties(ProductService productService, IEnumerable<Product> selectedProducts)
         {
+            Products = selectedProducts;
             var allProducts = productService.GetProductsForCategory(1); //prop
-            Products = selectedProducts.Any() ? selectedProducts : allProducts;
+            //Products = selectedProducts.Any() ? selectedProducts : allProducts;
             AgenciesOptions = new TravelAgency().GetSelectOptions(allProducts); //prop
             TravelAgencies = new SelectList(AgenciesOptions, "Id", "Name");
             CountriesList = productService.GetAllCountries().ToList(); //prop

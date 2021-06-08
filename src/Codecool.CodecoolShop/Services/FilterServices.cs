@@ -36,30 +36,27 @@ namespace Codecool.CodecoolShop.Services
 
         private List<Product> SelectProducts()
         {
-            var filteredProducts = new List<Product>();
+            var filteredProducts = _productService.GetAllProducts().ToList();
+            filteredProducts = UpdateFilteredProductsList<TravelAgency>(_travelAgencyService, _travelAgencyId, filteredProducts);
+            filteredProducts = UpdateFilteredProductsList<ProductCategory>(_productService, _categoryId, filteredProducts);
+            filteredProducts = GetProductsForCountry(filteredProducts);
+            return filteredProducts;
+        }
 
-            if (_travelAgencyId != 0)
-            {
-                filteredProducts = UpdateFilteredProductsList<TravelAgency>(_travelAgencyService, _travelAgencyId, filteredProducts);
-            }
-
-            if (_categoryId != 0)
-            {
-                filteredProducts = UpdateFilteredProductsList<ProductCategory>(_productService, _categoryId, filteredProducts);
-            }
-            
+        public List<Product> GetProductsForCountry(List<Product> filteredProducts)
+        {
             if (_countryId != 0)
             {
                 var productsForCountry = _productService.GetProductsForCountry(_countryId).ToList();
                 filteredProducts = GetCommonProducts(filteredProducts, productsForCountry);
             }
-
+            
             return filteredProducts;
         }
 
         private List<Product> UpdateFilteredProductsList<T>(IService service, int id, List<Product> initialProductList) where T : IFilterable, new()
         {
-            return new T().GetProductForFilter(service, id, initialProductList);
+            return id != 0 ? new T().GetProductForFilter(service, id, initialProductList) : initialProductList;
         }
 
         private List<Product> GetCommonProducts(List<Product> initialList, List<Product> newList)
