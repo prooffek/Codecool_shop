@@ -202,8 +202,12 @@ namespace Codecool.CodecoolShop.Controllers
         {
             if (payment.IsDataCorrect())
             {
-                return View("CorrectOrder");
+                var cart = SessionHelper.GetObjectFromJson<Cart>(HttpContext.Session, "cart");
+                if (cart == null) cart = new Cart();
+                cart.CountSum();
+                return View("OrderConfirmation", cart);
             }
+
             return View("FalseOrder");
         }
     }
