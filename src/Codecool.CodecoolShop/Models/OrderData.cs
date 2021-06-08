@@ -8,5 +8,6 @@ namespace Codecool.CodecoolShop.Models
         public DateTime DateOrder { get; set; }
         public Cart Cart { get; set; }
         public UserData UserData { get; set; }
+        public int Status { get; set; }
     }
 }
