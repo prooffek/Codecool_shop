@@ -22,7 +22,7 @@ namespace Codecool.CodecoolShop.Controllers
         private readonly ILogger<ProductController> _logger;
         public ProductService ProductService { get; set; }
         public TravelAgencyService TravelAgencyService { get; set; }
-        
+        public CartService CartService { get; set; }
         public ProductController(ILogger<ProductController> logger)
         {
             _logger = logger;
@@ -30,16 +30,21 @@ namespace Codecool.CodecoolShop.Controllers
                 ProductDaoMemory.GetInstance(),
                 ProductCategoryDaoMemory.GetInstance(),
                 CountryDaoMemory.GetInstance());
+            CartService = new CartService();
             TravelAgencyService = new TravelAgencyService(
+                
                 ProductDaoMemory.GetInstance(),
-                TravelAgencyDaoMemory.GetInstance());
+                TravelAgencyDaoMemory.GetInstance(),
+            ProductService);
+                
+            
         }
 
         public IActionResult Index()
         {
             var shopModel = new ShopModel(ProductService);
             // var cart = SessionHelper.GetObjectFromJson<Cart>(HttpContext.Session, "cart");
-
+            
             return View(shopModel);
         }
         
@@ -50,16 +55,7 @@ namespace Codecool.CodecoolShop.Controllers
 
         public IActionResult FilteredByTravelAgency(ShopModel shopModel)
         {
-            bool anOptionIsSelected = shopModel.TravelAgencyId != 0;
-            
-            if (anOptionIsSelected)
-            {
-                var productsFromTheTravelAgency = TravelAgencyService.GetProductsForTravelAgencies(shopModel.TravelAgencyId);
-                shopModel.ConfigureClassProperties(ProductService, productsFromTheTravelAgency);
-                return View("Index", shopModel);
-            }
-
-            return View("Index", new ShopModel(ProductService));
+            return View("Index", TravelAgencyService.FilteredByTravelAgency(shopModel));
         }
 
         public IActionResult FilteredByCategory(ShopModel shopModel)
@@ -83,7 +79,7 @@ namespace Codecool.CodecoolShop.Controllers
             return View(product);
         }
 
-        public string GetProductData(int id)
+        public string GetProductData(int id) //JavaScript
         {
             Product product = ProductService.GetProductForId(id);
             return JsonSerializer.Serialize(product);
@@ -113,8 +109,7 @@ namespace Codecool.CodecoolShop.Controllers
         [Route("/cart")]
         public IActionResult ReviewCart()
         {
-            var cart = SessionHelper.GetObjectFromJson<Cart>(HttpContext.Session, "cart");
-            if (cart == null) cart = new Cart();
+            var cart = SessionHelper.GetObjectFromJson<Cart>(HttpContext.Session, "cart") ?? new Cart();
             cart.CountSum();
             return View("Cart", cart);
         }
@@ -122,14 +117,7 @@ namespace Codecool.CodecoolShop.Controllers
         public void AddToCart(int id)
         {
             Cart cart = SessionHelper.GetObjectFromJson<Cart>(HttpContext.Session, "cart");
-            Product product = ProductService.GetProductForId(id);
-            CartItem cartItem = new CartItem(product, 1);
-            if (cart == null)
-            {
-                cart = new Cart();
-                cart.CartItems = new List<CartItem>();
-            }
-            cart.CartItems.Add(cartItem);
+            CartService.AddToCart(id, ProductService, cart);
             SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
         }
 
