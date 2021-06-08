@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Codecool.CodecoolShop.Models;
+using Codecool.CodecoolShop.Search;
 
 namespace Codecool.CodecoolShop.Services
 {
@@ -18,19 +19,19 @@ namespace Codecool.CodecoolShop.Services
             _productService = productService;
         }
 
-        private void LoadSelectedFilterOptions(ShopModel shopModel)
-        {
-            _travelAgencyId = shopModel.TravelAgencyId;
-            _categoryId = shopModel.ProductCategoryId;
-            _countryId = shopModel.CountryId;
-        }
-
         public ShopModel Filter(ShopModel shopModel)
         {
             LoadSelectedFilterOptions(shopModel);
             var filteredProducts = SelectProducts();
             shopModel.ConfigureClassProperties(_productService, filteredProducts);
             return shopModel;
+        }
+        
+        private void LoadSelectedFilterOptions(ShopModel shopModel)
+        {
+            _travelAgencyId = shopModel.TravelAgencyId;
+            _categoryId = shopModel.ProductCategoryId;
+            _countryId = shopModel.CountryId;
         }
 
         private List<Product> SelectProducts()
@@ -39,22 +40,31 @@ namespace Codecool.CodecoolShop.Services
 
             if (_travelAgencyId != 0)
             {
-                filteredProducts = _travelAgencyService.GetProductsForTravelAgencies(_travelAgencyId).ToList();
+                filteredProducts = UpdateFilteredProductsList<TravelAgency>(_travelAgencyService, _travelAgencyId, filteredProducts);
             }
 
             if (_categoryId != 0)
             {
-                var productsForCategory = _productService.GetProductsForCategory(_categoryId).ToList();
-                filteredProducts = productsForCategory.Where(product => filteredProducts.Contains(product)).ToList();
+                filteredProducts = UpdateFilteredProductsList<ProductCategory>(_productService, _categoryId, filteredProducts);
             }
             
             if (_countryId != 0)
             {
                 var productsForCountry = _productService.GetProductsForCountry(_countryId).ToList();
-                filteredProducts = productsForCountry.Where(product => filteredProducts.Contains(product)).ToList();
+                filteredProducts = GetCommonProducts(filteredProducts, productsForCountry);
             }
 
             return filteredProducts;
+        }
+
+        private List<Product> UpdateFilteredProductsList<T>(IService service, int id, List<Product> initialProductList) where T : IFilterable, new()
+        {
+            return new T().GetProductForFilter(service, id, initialProductList);
+        }
+
+        private List<Product> GetCommonProducts(List<Product> initialList, List<Product> newList)
+        {
+            return newList.Where(product => initialList.Contains(product)).ToList();
         }
     }
 }
