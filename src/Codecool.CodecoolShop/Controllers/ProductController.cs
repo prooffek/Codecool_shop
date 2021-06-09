@@ -129,7 +129,7 @@ namespace Codecool.CodecoolShop.Controllers
         public void AddToCart(int id)
         {
             Cart cart = SessionHelper.GetObjectFromJson<Cart>(HttpContext.Session, "cart");
-            CartService.AddToCart(id, ProductService, cart);
+            cart = CartService.AddToCart(id, ProductService, cart);
             SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
         }
 
