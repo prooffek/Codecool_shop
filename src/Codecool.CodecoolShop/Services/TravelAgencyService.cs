@@ -8,11 +8,13 @@ namespace Codecool.CodecoolShop.Services
     {
         private readonly IProductDao _productDao;
         private readonly ITravelAgencyDao _travelAgencyDao;
+        private ProductService _productService;
 
-        public TravelAgencyService(IProductDao productDao, ITravelAgencyDao travelAgencyDao)
+        public TravelAgencyService(IProductDao productDao, ITravelAgencyDao travelAgencyDao, ProductService productService)
         {
             _productDao = productDao;
             _travelAgencyDao = travelAgencyDao;
+            _productService = productService;
         }
         
         public TravelAgency GetTravelAgency(int agencyId)
@@ -31,5 +33,21 @@ namespace Codecool.CodecoolShop.Services
             TravelAgency travelAgency = _travelAgencyDao.Get(id);
             return _productDao.GetBy(travelAgency);
         }
+
+        /*
+        public ShopModel FilteredByTravelAgency(ShopModel shopModel)
+        {
+            bool anOptionIsSelected = shopModel.TravelAgencyId != 0;
+            
+            if (anOptionIsSelected)
+            {
+                var productsFromTheTravelAgency = GetProductsForTravelAgencies(shopModel.TravelAgencyId);
+                shopModel.ConfigureClassProperties(_productService, productsFromTheTravelAgency);
+                return shopModel;
+            }
+
+            return new ShopModel(_productService);
+        }
+        */
     }
 }

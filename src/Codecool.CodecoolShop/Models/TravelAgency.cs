@@ -5,7 +5,7 @@ using Codecool.CodecoolShop.Services;
 
 namespace Codecool.CodecoolShop.Models
 {
-    public class TravelAgency : BaseModel, IFilterable
+    public class TravelAgency : BaseFilter, IFilterable
     {
         public List<Product> Products { get; set; }
         public List<IFilterable> GetSelectOptions(IEnumerable<Product> products)
@@ -20,6 +20,7 @@ namespace Codecool.CodecoolShop.Models
             return agencyNames;
         }
 
+        /*
         public List<Product> GetProductForFilter(IService service, int id, List<Product> initialList)
         {
             var newList = service.GetProductsForId(id).ToList();
@@ -29,6 +30,7 @@ namespace Codecool.CodecoolShop.Models
             var result = newList.Where(product => initialList.Contains(product)).ToList();
             return result;
         }
+        */
 
 
         public override string ToString()

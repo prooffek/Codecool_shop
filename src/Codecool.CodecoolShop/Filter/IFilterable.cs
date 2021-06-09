@@ -7,6 +7,6 @@ namespace Codecool.CodecoolShop.Search
     public interface IFilterable
     {
         public List<IFilterable> GetSelectOptions(IEnumerable<Product> products);
-        public List<Product> GetProductForFilter(IService service, int id, List<Product> initialList);
+        //public List<Product> GetProductForFilter(IService service, int id, List<Product> initialList);
     }
 }

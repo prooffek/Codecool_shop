@@ -1,7 +1,20 @@
-﻿@using Codecool.CodecoolShop.Controllers
-@{
-    ViewData["Title"] = "Home Page";
-}
-<h1>Płatność odrzucona, zamówienie nie zostanie zrealizowane</h1>
-<br><br>
-<input type="button" value="Spróbuj ponownie" onclick="location.href='@Url.Action("Payment")'" />
+﻿<div class="container">
+    <div class="ui middle aligned center aligned grid">
+        <div class="ui eight wide column">
+   
+            <form class="ui large form">
+                
+                <div class="ui icon negative message">
+                    <i class="warning icon"></i>
+                    <div class="content">
+                        <div class="header">
+                            Oops! Płatność nieudana.
+                        </div>
+                    </div>
+            
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<input class="ui large teal submit fluid button" type="button" value="Spróbuj ponownie" onclick="location.href='@Url.Action("Payment")'" />

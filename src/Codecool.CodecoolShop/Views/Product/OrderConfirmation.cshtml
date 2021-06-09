@@ -1,0 +1,22 @@
+﻿@{
+    ViewData["Title"] = "Order confirmation";
+}
+@{
+    @model Cart
+}
+@section Styles
+{
+    <link rel="stylesheet" href="~/css/orderConfirmation.css" />
+}
+    <div class="px-4 py-5">
+        <h4 class="mt-5 theme-color mb-5">Dziękujemy za zamówienie</h4> <span class="theme-color">Podsumowanie zamówienia</span>
+        <div class="mb-3">
+            <hr class="new1">
+        </div>
+        @foreach (var item in @Model.CartItems)
+        {
+            <div class="d-flex justify-content-between"> <span class="font-weight-bold">@item.Product.Name</span> <span class="text-muted">@item.Sum</span> </div>
+        }
+        <div class="d-flex justify-content-between mt-3"> <span class="font-weight-bold">SUMA</span> <span class="font-weight-bold theme-color">@Model.Sum</span> </div>
+        <div class="back-to-shop"><a href=@Url.Action("Index")>&leftarrow;</a><span class="text-muted">Powrót do sklepu</span></div>
+    </div>
