@@ -21,6 +21,7 @@ namespace Codecool.CodecoolShop.Controllers
     {
         private readonly ILogger<ProductController> _logger;
         public ProductService ProductService { get; set; }
+        public CategoryService CategoryService { get; set; }
         public TravelAgencyService TravelAgencyService { get; set; }
         public CartService CartService { get; set; }
         public ProductController(ILogger<ProductController> logger)
@@ -32,12 +33,14 @@ namespace Codecool.CodecoolShop.Controllers
                 CountryDaoMemory.GetInstance());
             CartService = new CartService();
             TravelAgencyService = new TravelAgencyService(
-                
                 ProductDaoMemory.GetInstance(),
                 TravelAgencyDaoMemory.GetInstance(),
-            ProductService);
-                
-            
+                ProductService);
+            CategoryService = new CategoryService(
+                ProductDaoMemory.GetInstance(),
+                ProductCategoryDaoMemory.GetInstance(),
+                ProductService
+            );
         }
 
         public IActionResult Index()
@@ -64,7 +67,7 @@ namespace Codecool.CodecoolShop.Controllers
 
             if (anOptionIsSelected)
             {
-                var productsFromCategory = ProductService.GetProductsForCategory(shopModel.ProductCategoryId);
+                var productsFromCategory = CategoryService.GetProductsForCategory(shopModel.ProductCategoryId);
                 shopModel.ConfigureClassPropertiesCategory(ProductService, productsFromCategory);
                 return View("Index", shopModel);
             }
