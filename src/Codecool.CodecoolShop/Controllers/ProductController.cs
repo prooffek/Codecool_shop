@@ -24,6 +24,7 @@ namespace Codecool.CodecoolShop.Controllers
         public CategoryService CategoryService { get; set; }
         public TravelAgencyService TravelAgencyService { get; set; }
         public CartService CartService { get; set; }
+        public CountryService CountryService { get; set; }
         public ProductController(ILogger<ProductController> logger)
         {
             _logger = logger;
@@ -41,6 +42,9 @@ namespace Codecool.CodecoolShop.Controllers
                 ProductCategoryDaoMemory.GetInstance(),
                 ProductService
             );
+            CountryService = new CountryService(ProductDaoMemory.GetInstance(),
+                CountryDaoMemory.GetInstance(),
+                ProductService);
         }
 
         public IActionResult Index()
@@ -92,16 +96,7 @@ namespace Codecool.CodecoolShop.Controllers
 
         public IActionResult FilteredByCountries(ShopModel shopModel)
         {
-            int selectedValue = shopModel.CountryId;
-
-            if (selectedValue != 0)
-            {
-                var productsFromCountry = ProductService.GetProductsForCountry(shopModel.CountryId);
-                shopModel.ConfigureClassProperties(ProductService, productsFromCountry);
-                return View("Index", shopModel);
-            }
-
-            return View("Index", new ShopModel(ProductService));
+            return View("Index", CountryService.FilteredByCountry(shopModel));
 
         }
         public IActionResult Error()

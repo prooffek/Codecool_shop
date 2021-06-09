@@ -29,16 +29,7 @@ namespace Codecool.CodecoolShop.Services
         //     return this.productDao.GetBy(category);
         // }
 
-        public IEnumerable<Country> GetAllCountries()
-        {
-            return this.countryDao.GetAll();
-        }
-
-        public IEnumerable<Product> GetProductsForCountry(int countryId)
-        {
-            Country country = this.countryDao.Get(countryId);
-            return this.productDao.GetBy(country);
-        }
+        
 
         public Product GetProductForId(int productId)
         {
