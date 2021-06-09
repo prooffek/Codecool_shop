@@ -5,6 +5,7 @@ namespace Codecool.CodecoolShop.Models
 {
     public class ProductCategory: BaseModel, IFilterable
     {
+        
         public List<Product> Products { get; set; }
         public List<IFilterable> GetSelectOptions(IEnumerable<Product> products1)
         {
