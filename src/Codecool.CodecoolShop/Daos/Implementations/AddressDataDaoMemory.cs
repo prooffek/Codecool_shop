@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using Codecool.CodecoolShop.Models;
-using Data;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
+
 
 namespace Codecool.CodecoolShop.Daos.Implementations
 {

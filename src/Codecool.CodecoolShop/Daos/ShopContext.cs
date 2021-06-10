@@ -3,7 +3,7 @@ using Codecool.CodecoolShop.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
-namespace Data
+namespace Codecool.CodecoolShop.Daos
 {
     public class ShopContext : DbContext
     {
