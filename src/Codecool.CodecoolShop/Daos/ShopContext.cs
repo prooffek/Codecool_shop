@@ -10,6 +10,7 @@ namespace Codecool.CodecoolShop.Daos
         private const string ConnectionString = "Data Source=.;Database=CodecoolTravel;Integrated Security=true";
 
         public DbSet<Product> Product { get; set; }
+        public DbSet<Status> OrderStatus { get; set; }
 
         /*
         protected override void OnModelCreating(ModelBuilder modelBuilder)
