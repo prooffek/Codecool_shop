@@ -1,13 +1,16 @@
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Threading.Tasks;
 using Codecool.CodecoolShop.Daos;
 using Codecool.CodecoolShop.Daos.Implementations;
 using Codecool.CodecoolShop.Models;
+using Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -16,6 +19,7 @@ namespace Codecool.CodecoolShop
 {
     public class Startup
     {
+        private const string ConnectionString = "Data Source=.;Database=CodecoolTravel;Integrated Security=true";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -26,6 +30,7 @@ namespace Codecool.CodecoolShop
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<ShopContext>();
             services.AddControllersWithViews();
             services.AddSession();
         }
@@ -59,6 +64,10 @@ namespace Codecool.CodecoolShop
             });
 
             SetupInMemoryDatabases();
+            
+            var shopContext = new ShopContext();
+            var products = shopContext.Product;
+
         }
 
         private void SetupInMemoryDatabases()

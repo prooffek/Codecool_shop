@@ -87,7 +87,7 @@ create table Product
     Name              nvarchar(255),
     Description       nvarchar(255),
     DefaultPrice      decimal,
-    LenghtOfStay      int,
+    LengthOfStay      int,
     City              nvarchar(255),
     ImgName           nvarchar(255),
     ProductCategoryId int
