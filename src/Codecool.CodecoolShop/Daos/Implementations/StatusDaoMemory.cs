@@ -23,6 +23,7 @@ namespace Codecool.CodecoolShop.Daos.Implementations
         {
             Status statusToRemove = Get(id);
             _shopContext.Remove(statusToRemove);
+            _shopContext.SaveChanges();
         }
 
         public Status Get(int id)
