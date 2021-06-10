@@ -25,6 +25,7 @@ namespace Codecool.CodecoolShop.Controllers
         public TravelAgencyService TravelAgencyService { get; set; }
         public CartService CartService { get; set; }
         public CountryService CountryService { get; set; }
+        public SendEmailService SendEmailService { get; set; }
         public ProductController(ILogger<ProductController> logger)
         {
             _logger = logger;
@@ -45,6 +46,7 @@ namespace Codecool.CodecoolShop.Controllers
             CountryService = new CountryService(ProductDaoMemory.GetInstance(),
                 CountryDaoMemory.GetInstance(),
                 ProductService);
+            SendEmailService = new SendEmailService();
         }
 
         public IActionResult Index()
@@ -109,6 +111,7 @@ namespace Codecool.CodecoolShop.Controllers
         {
             var cart = SessionHelper.GetObjectFromJson<Cart>(HttpContext.Session, "cart") ?? new Cart();
             cart.CountSum();
+            SendEmailService.SendEmail("ewelina.stasiak5@gmail.com", cart);
             return View("Cart", cart);
         }
 
