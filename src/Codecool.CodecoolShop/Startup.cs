@@ -65,9 +65,15 @@ namespace Codecool.CodecoolShop
 
             SetupInMemoryDatabases();
             
+            /*
             var shopContext = new ShopContext();
             var products = shopContext.Product;
-
+            
+            foreach (var product in products)
+            {
+                Console.Out.WriteLine(product.Name);
+            }
+            */
         }
 
         private void SetupInMemoryDatabases()

@@ -98,7 +98,8 @@ create table Product
             references TravelAgency,
     CountryId         int
         constraint Product_Country_Id_fk
-            references Country
+            references Country,
+    Currency nvarchar(255) default 'PLN',
 )
 go
 
