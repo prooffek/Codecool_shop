@@ -10,6 +10,10 @@ namespace Data
         private const string ConnectionString = "Data Source=.;Database=CodecoolTravel;Integrated Security=true";
 
         public DbSet<Product> Product { get; set; }
+        public DbSet<AddressData> AddressDatas { get; set; }
+        public DbSet<Cart> Carts { get; set; }
+        public DbSet<CartItem> CartItems { get; set; }
+        public DbSet<Country> Countries { get; set; }
 
         /*
         protected override void OnModelCreating(ModelBuilder modelBuilder)
