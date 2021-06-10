@@ -9,13 +9,15 @@ namespace Codecool.CodecoolShop.Test
     public class Tests
     {
         private StatusDaoMemory _statusDaoMemory;
+        private TravelAgencyDaoMemory _travelAgencyDaoMemory;
+        
         [SetUp]
         public void Setup()
         {
             _statusDaoMemory = new StatusDaoMemory();
+            _travelAgencyDaoMemory = new TravelAgencyDaoMemory();
         }
-
-        [Test]
+        
         [TestCase(1)]
         public void StatusDaoMemory_DataBase_SelectStatusById(int id)
         {
@@ -53,6 +55,48 @@ namespace Codecool.CodecoolShop.Test
             _statusDaoMemory.Remove(id);
             int newLength = _statusDaoMemory.GetAll().Count();
             var result = _statusDaoMemory.Get(2);
+            
+            Assert.AreEqual(prevLength - 1, newLength);
+            Assert.AreEqual(null, result);
+        }
+        
+        [TestCase(1)]
+        public void TravelAgencyDaoMemory_DataBase_SelectTravelAgencyById(int id)
+        {
+            var travelAgency = new TravelAgency() {Name = "Tui", Description = "Description"};
+            var result = _travelAgencyDaoMemory.Get(id);
+            Assert.AreEqual(travelAgency.Name, result.Name);
+            Assert.AreEqual(travelAgency.Description, result.Description);
+        }
+
+        [Test]
+        public void TravelAgencyDaoMemory_DataBase_SelectAllTravelAgency()
+        {
+            int length = 1;
+            var result = _travelAgencyDaoMemory.GetAll();
+            Assert.AreEqual(length, result.Count());
+        }
+        
+        [Test]
+        public void TravelAgencyDaoMemory_DataBase_AddTravelAgencyToDb()
+        {
+            var travelAgency = new TravelAgency() {Name = "Rainbow", Description = "Description 2"};
+            int prevLength = _travelAgencyDaoMemory.GetAll().Count();
+            _travelAgencyDaoMemory.Add(travelAgency);
+            int newLength = _travelAgencyDaoMemory.GetAll().Count();
+            var result = _travelAgencyDaoMemory.Get(2);
+            
+            Assert.AreEqual(prevLength + 1, newLength);
+            Assert.AreEqual(travelAgency, result);
+        }
+
+        [TestCase(2)]
+        public void TravelAgencyDao_DataBase_RemoveTravelAgencyFromDB(int id)
+        {
+            int prevLength = _travelAgencyDaoMemory.GetAll().Count();
+            _travelAgencyDaoMemory.Remove(id);
+            int newLength = _travelAgencyDaoMemory.GetAll().Count();
+            var result = _travelAgencyDaoMemory.Get(2);
             
             Assert.AreEqual(prevLength - 1, newLength);
             Assert.AreEqual(null, result);
