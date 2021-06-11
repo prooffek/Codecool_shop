@@ -30,7 +30,7 @@ namespace Codecool.CodecoolShop.Test
         [Test]
         public void StatusDaoMemory_DataBase_SelectAllStatuses()
         {
-            int length = 1;
+            int length = 3;
             var result = _statusDaoMemory.GetAll();
             Assert.AreEqual(length, result.Count());
         }
@@ -42,7 +42,7 @@ namespace Codecool.CodecoolShop.Test
             int prevLength = _statusDaoMemory.GetAll().Count();
             _statusDaoMemory.Add(status);
             int newLength = _statusDaoMemory.GetAll().Count();
-            var result = _statusDaoMemory.Get(2);
+            var result = _statusDaoMemory.Get(newLength + 1);
             
             Assert.AreEqual(prevLength + 1, newLength);
             Assert.AreEqual(status, result);
