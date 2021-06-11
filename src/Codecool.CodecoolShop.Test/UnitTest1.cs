@@ -10,6 +10,7 @@ namespace Codecool.CodecoolShop.Test
     {
         private StatusDaoMemory _statusDaoMemory;
         private TravelAgencyDaoMemory _travelAgencyDaoMemory;
+        private UserDataDaoMemory _userDataDaoMemory;
         
         [SetUp]
         public void Setup()
@@ -97,6 +98,66 @@ namespace Codecool.CodecoolShop.Test
             _travelAgencyDaoMemory.Remove(id);
             int newLength = _travelAgencyDaoMemory.GetAll().Count();
             var result = _travelAgencyDaoMemory.Get(2);
+            
+            Assert.AreEqual(prevLength - 1, newLength);
+            Assert.AreEqual(null, result);
+        }
+        
+        [TestCase(1)]
+        public void UserDataDaoMemory_DataBase_SelectUserDataById(int id)
+        {
+            var user = new UserData() {
+                FirstName = "1st name",
+                LastName = "last name",
+                Email = "1st@gmail.com",
+                Password = "1234",
+                AddressData = null,
+                PhoneNumber = "123456789"
+            };
+            var result = _userDataDaoMemory.Get(id);
+            Assert.AreEqual(user.FirstName, result.FirstName);
+            Assert.AreEqual(user.LastName, result.LastName);
+            Assert.AreEqual(user.Email, result.Email);
+            Assert.AreEqual(user.Password, result.Password);
+            Assert.AreEqual(user.AddressData, result.AddressData);
+            Assert.AreEqual(user.PhoneNumber, result.PhoneNumber);
+        }
+
+        [Test]
+        public void UserDataDaoMemory_DataBase_SelectAllUserData()
+        {
+            int length = 1;
+            var result = _userDataDaoMemory.GetAll();
+            Assert.AreEqual(length, result.Count());
+        }
+        
+        [Test]
+        public void UserDataDaoMemory_DataBase_AddUserDataToDb()
+        {
+            var user = new UserData() {
+                FirstName = "Tom",
+                LastName = "Hanks",
+                Email = "Hanksmail.com",
+                Password = "1234",
+                AddressData = null,
+                PhoneNumber = "123456789"
+            };
+            int prevLength = _userDataDaoMemory.GetAll().Count();
+            _userDataDaoMemory.Add(user);
+            int newLength = _userDataDaoMemory.GetAll().Count();
+            var result = _userDataDaoMemory.Get(2);
+            
+            Assert.AreEqual(prevLength + 1, newLength);
+            Assert.AreEqual(user, result);
+        }
+
+        [TestCase(2)]
+        public void UserDataDao_DataBase_RemoveUserDataFromDB(int id)
+        {
+            int prevLength = _userDataDaoMemory.GetAll().Count();
+            _userDataDaoMemory.Remove(id);
+            int newLength = _userDataDaoMemory.GetAll().Count();
+            var result = _userDataDaoMemory.Get(2);
             
             Assert.AreEqual(prevLength - 1, newLength);
             Assert.AreEqual(null, result);
