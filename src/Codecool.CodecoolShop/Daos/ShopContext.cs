@@ -10,11 +10,14 @@ namespace Codecool.CodecoolShop.Daos
 {
     public class ShopContext : DbContext
     {
-        private readonly string _connectionString; 
+        private readonly string _connectionString = "Data Source=.;Database=CodecoolTravel;Integrated Security=true";
+
+        /*
         public ShopContext(IConfiguration configuration)
         {
             _connectionString = configuration.GetConnectionString("ShopDb");
         }
+        */
         
         public DbSet<Product> Product { get; set; }
         public DbSet<Status> OrderStatus { get; set; }
