@@ -11,6 +11,11 @@ namespace Codecool.CodecoolShop.Daos.Implementations
         private List<TravelAgency> data = new List<TravelAgency>();
         private static TravelAgencyDaoMemory instance = null;
 
+        public TravelAgencyDaoMemory(ShopContext db)
+        {
+            _shopContext = db;
+        }
+
         public TravelAgencyDaoMemory()
         {
             _shopContext = new ShopContext();

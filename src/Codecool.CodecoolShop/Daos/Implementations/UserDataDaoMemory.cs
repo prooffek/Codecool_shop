@@ -9,6 +9,11 @@ namespace Codecool.CodecoolShop.Daos.Implementations
     {
         private ShopContext _shopContext;
 
+        public UserDataDaoMemory(ShopContext db)
+        {
+            _shopContext = db;
+        }
+
         public UserDataDaoMemory()
         {
             _shopContext = new ShopContext();
@@ -31,7 +36,7 @@ namespace Codecool.CodecoolShop.Daos.Implementations
         public UserData Get(int id)
         {
             var user = _shopContext.User.Find(id);
-            user.AddressData = new AddressDataDaoMemory().Get(user.AddressDataId);
+            user.AddressData = _shopContext.AddressData.Find(user.AddressDataId);
             return user;
             //throw new System.NotImplementedException();
         }

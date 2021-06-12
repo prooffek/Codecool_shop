@@ -6,9 +6,9 @@ namespace Codecool.CodecoolShop.Daos.Implementations
     public class AddressDataDaoMemory : IAddressDataDao
     {
         private ShopContext _shopContext;
-        public AddressDataDaoMemory()
+        public AddressDataDaoMemory(ShopContext db)
         {
-            _shopContext = new ShopContext();
+            _shopContext = db;
         }
         public void Add(AddressData item)
         {

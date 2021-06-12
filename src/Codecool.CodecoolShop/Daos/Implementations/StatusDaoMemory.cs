@@ -9,10 +9,16 @@ namespace Codecool.CodecoolShop.Daos.Implementations
     {
         private ShopContext _shopContext;
 
+        public StatusDaoMemory(ShopContext db)
+        {
+            _shopContext = db;
+        }
+
         public StatusDaoMemory()
         {
             _shopContext = new ShopContext();
         }
+        
         public void Add(Status item)
         {
             _shopContext.Add(item);

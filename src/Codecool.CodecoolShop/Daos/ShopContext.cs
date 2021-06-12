@@ -12,6 +12,15 @@ namespace Codecool.CodecoolShop.Daos
     {
         private readonly string _connectionString = "Data Source=.;Database=CodecoolTravel;Integrated Security=true";
 
+        public ShopContext(DbContextOptions<ShopContext> options) : base(options)
+        {
+        }
+
+        public ShopContext()
+        {
+        }
+        
+        
         /*
         public ShopContext(IConfiguration configuration)
         {

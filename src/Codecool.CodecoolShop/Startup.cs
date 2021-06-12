@@ -29,7 +29,9 @@ namespace Codecool.CodecoolShop
         public void ConfigureServices(IServiceCollection services)
         { 
             //services.AddDbContext<ShopContext>(option => option.UseSqlServer(Configuration.GetConnectionString("ShopDb")));
-            services.AddDbContext<ShopContext>();
+            services.AddDbContext<ShopContext>(option => 
+                option.UseSqlServer(Configuration.GetConnectionString("ShopDb"))
+                );
             services.AddControllersWithViews();
             services.AddSession();
         }
