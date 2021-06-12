@@ -1,10 +1,13 @@
 using System.Collections.Generic;
+using System.Linq;
 using Codecool.CodecoolShop.Search;
+using Codecool.CodecoolShop.Services;
 
 namespace Codecool.CodecoolShop.Models
 {
-    public class ProductCategory: BaseModel, IFilterable
+    public class ProductCategory: BaseFilter, IFilterable
     {
+        
         public List<Product> Products { get; set; }
         public List<IFilterable> GetSelectOptions(IEnumerable<Product> products1)
         {
@@ -22,6 +25,7 @@ namespace Codecool.CodecoolShop.Models
 
             return categoriesNames;
         }
+
         public override string ToString()
         {
             return new string($"Id: {Id} Name: {Name} Description: {Description}");

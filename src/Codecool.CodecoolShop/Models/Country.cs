@@ -3,7 +3,7 @@ using Codecool.CodecoolShop.Search;
 
 namespace Codecool.CodecoolShop.Models
 {
-    public class Country: BaseModel, IFilterable
+    public class Country: BaseFilter, IFilterable
     {
         public List<Product> Products { get; set; }
         public List<IFilterable> GetSelectOptions(IEnumerable<Product> products)

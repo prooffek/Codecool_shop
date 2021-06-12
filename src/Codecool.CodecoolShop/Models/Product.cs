@@ -4,7 +4,8 @@ namespace Codecool.CodecoolShop.Models
 {
     public class Product : BaseModel
     {
-        public string Currency { get; set; }
+
+        public string Currency { get; set; } = "PLN";
         public decimal DefaultPrice { get; set; }
         public int LengthOfStay { get; set; }
         public Country Country { get; set; }

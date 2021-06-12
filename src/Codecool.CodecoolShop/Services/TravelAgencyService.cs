@@ -4,7 +4,7 @@ using Codecool.CodecoolShop.Models;
 
 namespace Codecool.CodecoolShop.Services
 {
-    public class TravelAgencyService
+    public class TravelAgencyService : IService
     {
         private readonly IProductDao _productDao;
         private readonly ITravelAgencyDao _travelAgencyDao;
@@ -28,6 +28,13 @@ namespace Codecool.CodecoolShop.Services
             return _productDao.GetBy(travelAgency);
         }
 
+        public IEnumerable<Product> GetProductsForId(int id)
+        {
+            TravelAgency travelAgency = _travelAgencyDao.Get(id);
+            return _productDao.GetBy(travelAgency);
+        }
+
+        /*
         public ShopModel FilteredByTravelAgency(ShopModel shopModel)
         {
             bool anOptionIsSelected = shopModel.TravelAgencyId != 0;
@@ -41,5 +48,6 @@ namespace Codecool.CodecoolShop.Services
 
             return new ShopModel(_productService);
         }
+        */
     }
 }

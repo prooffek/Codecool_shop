@@ -4,7 +4,7 @@ using Codecool.CodecoolShop.Models;
 
 namespace Codecool.CodecoolShop.Services
 {
-    public class CountryService
+    public class CountryService : IService
     {
         private readonly IProductDao _productDao;
         private readonly ICountryDao _countryDao;
@@ -21,31 +21,16 @@ namespace Codecool.CodecoolShop.Services
         {
             return this._countryDao.Get(agencyId);
         }
-
-        public IEnumerable<Product> GetProductsForCountry(int countryId)
+        
+        public IEnumerable<Product> GetProductsForId(int countryId)
         {
             Country country = _countryDao.Get(countryId);
             return _productDao.GetBy(country);
         }
 
-        public ShopModel FilteredByCountry(ShopModel shopModel)
-        {
-            bool anOptionIsSelected = shopModel.CountryId != 0;
-
-            if (anOptionIsSelected)
-            {
-                var productsFromTheCountry = GetProductsForCountry(shopModel.CountryId);
-                shopModel.ConfigureClassProperties(_productService, productsFromTheCountry);
-                return shopModel;
-            }
-
-            return new ShopModel(_productService);
-        }
-        
         public IEnumerable<Country> GetAllCountries()
         {
             return this._countryDao.GetAll();
         }
-        
     }
 }

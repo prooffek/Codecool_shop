@@ -4,7 +4,7 @@ using Codecool.CodecoolShop.Models;
 
 namespace Codecool.CodecoolShop.Services
 {
-    public class ProductService
+    public class ProductService : IService
     {
         private readonly IProductDao productDao;
         // private readonly IProductCategoryDao productCategoryDao;
@@ -39,6 +39,12 @@ namespace Codecool.CodecoolShop.Services
         public IEnumerable<Product> GetAllProducts()
         {
             return this.productDao.GetAll();
+        }
+
+        public IEnumerable<Product> GetProductsForId(int id)
+        {
+            ProductCategory category = this.productCategoryDao.Get(id);
+            return this.productDao.GetBy(category);
         }
     }
 }
