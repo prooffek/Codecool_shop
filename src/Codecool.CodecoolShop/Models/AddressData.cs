@@ -9,9 +9,5 @@ namespace Codecool.CodecoolShop.Models
         public string City { get; set; }
         public string ZipCode { get; set; }
         public string Street { get; set; }
-
-        // navigation property
-        public UserData User { get; set; }
-
     }
 }

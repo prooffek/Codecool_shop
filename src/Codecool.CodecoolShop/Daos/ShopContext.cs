@@ -25,6 +25,7 @@ namespace Codecool.CodecoolShop.Daos
         public DbSet<UserData> User { get; set; }
         public DbSet<AddressData> AddressData { get; set; }
         
+        /*
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<UserData>()
@@ -33,6 +34,7 @@ namespace Codecool.CodecoolShop.Daos
                 .HasForeignKey<UserData>(usr => usr.AddressDataId);
             base.OnModelCreating(modelBuilder);
         }
+        */
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

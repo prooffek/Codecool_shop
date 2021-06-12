@@ -114,7 +114,6 @@ namespace Codecool.CodecoolShop.Test
                 Street = "usbcj",
                 Id = 1,
                 ZipCode = "11111",
-                User = null
             };
             
             var user = new UserData() {
@@ -133,7 +132,6 @@ namespace Codecool.CodecoolShop.Test
             Assert.AreEqual(user.AddressData.Country, result.AddressData.Country);
             Assert.AreEqual(user.AddressData.City, result.AddressData.City);
             Assert.AreEqual(user.AddressData.Street, result.AddressData.Street);
-            Assert.AreEqual(user.AddressData.User, result.AddressData.User);
             Assert.AreEqual(user.AddressData.ZipCode, result.AddressData.ZipCode);
             Assert.AreEqual(user.AddressData.Id, result.AddressData.Id);
             Assert.AreEqual(user.PhoneNumber, result.PhoneNumber);

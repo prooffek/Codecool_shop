@@ -31,8 +31,7 @@ namespace Codecool.CodecoolShop.Daos.Implementations
         public UserData Get(int id)
         {
             var user = _shopContext.User.Find(id);
-            int addressId = user.AddressDataId;
-            user.AddressData = new AddressDataDaoMemory().Get(addressId);
+            user.AddressData = new AddressDataDaoMemory().Get(user.AddressDataId);
             return user;
             //throw new System.NotImplementedException();
         }
