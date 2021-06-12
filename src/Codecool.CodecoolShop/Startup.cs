@@ -18,18 +18,17 @@ namespace Codecool.CodecoolShop
 {
     public class Startup
     {
-        private const string ConnectionString = "Data Source=.;Database=CodecoolTravel;Integrated Security=true";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
         public IConfiguration Configuration { get; }
-
+        
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {
-            services.AddDbContext<ShopContext>();
+        { 
+            services.AddDbContext<ShopContext>(option => option.UseSqlServer(Configuration.GetConnectionString("ShopDb")));
             services.AddControllersWithViews();
             services.AddSession();
         }
