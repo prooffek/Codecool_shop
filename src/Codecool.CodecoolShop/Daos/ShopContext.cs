@@ -30,7 +30,7 @@ namespace Codecool.CodecoolShop.Daos
             modelBuilder.Entity<UserData>()
                 .HasOne(user => user.AddressData)
                 .WithOne(adr => adr.User)
-                .HasForeignKey<AddressData>(adr => adr.UserId);
+                .HasForeignKey<UserData>(usr => usr.AddressDataId);
             base.OnModelCreating(modelBuilder);
         }
 

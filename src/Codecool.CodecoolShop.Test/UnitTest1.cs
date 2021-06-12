@@ -107,12 +107,22 @@ namespace Codecool.CodecoolShop.Test
         [TestCase(1)]
         public void UserDataDaoMemory_DataBase_SelectUserDataById(int id)
         {
+            var addressData = new AddressData()
+            {
+                City = "Istambul",
+                Country = "Turkey",
+                Street = "usbcj",
+                Id = 1,
+                ZipCode = "11111",
+                User = null
+            };
+            
             var user = new UserData() {
                 FirstName = "1st name",
                 LastName = "last name",
                 Email = "1st@gmail.com",
                 Password = "1234",
-                AddressData = null,
+                AddressData = addressData,
                 PhoneNumber = "123456789"
             };
             var result = _userDataDaoMemory.Get(id);
@@ -120,7 +130,12 @@ namespace Codecool.CodecoolShop.Test
             Assert.AreEqual(user.LastName, result.LastName);
             Assert.AreEqual(user.Email, result.Email);
             Assert.AreEqual(user.Password, result.Password);
-            Assert.AreEqual(user.AddressData, result.AddressData);
+            Assert.AreEqual(user.AddressData.Country, result.AddressData.Country);
+            Assert.AreEqual(user.AddressData.City, result.AddressData.City);
+            Assert.AreEqual(user.AddressData.Street, result.AddressData.Street);
+            Assert.AreEqual(user.AddressData.User, result.AddressData.User);
+            Assert.AreEqual(user.AddressData.ZipCode, result.AddressData.ZipCode);
+            Assert.AreEqual(user.AddressData.Id, result.AddressData.Id);
             Assert.AreEqual(user.PhoneNumber, result.PhoneNumber);
         }
         
