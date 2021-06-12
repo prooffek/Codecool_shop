@@ -94,7 +94,7 @@ namespace Codecool.CodecoolShop
             productDataStore.Add(new Product { Name = "Lenovo IdeaPad Miix 700", DefaultPrice = 479.0m, Currency = "USD", Description = "Keyboard cover is included. Fanless Core m5 processor. Full-size USB ports. Adjustable kickstand.", ProductCategory = tablet, TravelAgency = lenovo });
             productDataStore.Add(new Product { Name = "Amazon Fire HD 8", DefaultPrice = 89.0m, Currency = "USD", Description = "Amazon's latest Fire HD 8 tablet is a great value for media consumption.", ProductCategory = tablet, TravelAgency = amazon });
             */
-
+            /*
             ITravelAgencyDao travelAgencyDataStore = TravelAgencyDaoMemory.GetInstance();
             ICountryDao countryDataStore = CountryDaoMemory.GetInstance();
             
@@ -250,6 +250,9 @@ namespace Codecool.CodecoolShop
                 City = "",
                 ImgName = "RParyzLight",
                 TravelAgency = itaka });
+                
+                */
         }
+        
     }
 }
