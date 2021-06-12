@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Codecool.CodecoolShop.Models
 {
     public class AddressData
@@ -6,7 +8,11 @@ namespace Codecool.CodecoolShop.Models
         public string Country { get; set; }
         public string City { get; set; }
         public string ZipCode { get; set; }
-        public string Address { get; set; }
+        public string Street { get; set; }
+        public int UserId { get; set; }
         
+        // navigation property
+        public UserData User { get; set; }
+
     }
 }
