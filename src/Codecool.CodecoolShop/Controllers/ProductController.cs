@@ -111,7 +111,6 @@ namespace Codecool.CodecoolShop.Controllers
         {
             var cart = SessionHelper.GetObjectFromJson<Cart>(HttpContext.Session, "cart") ?? new Cart();
             cart.CountSum();
-            SendEmailService.SendEmail("ewelina.stasiak5@gmail.com", cart);
             return View("Cart", cart);
         }
 
@@ -194,6 +193,7 @@ namespace Codecool.CodecoolShop.Controllers
                 var cart = SessionHelper.GetObjectFromJson<Cart>(HttpContext.Session, "cart");
                 if (cart == null) cart = new Cart();
                 cart.CountSum();
+                SendEmailService.SendEmail("ewelina.stasiak5@gmail.com", cart);
                 return View("OrderConfirmation", cart);
             }
 
