@@ -17,6 +17,7 @@ namespace Codecool.CodecoolShop.Test
         {
             _statusDaoMemory = new StatusDaoMemory();
             _travelAgencyDaoMemory = new TravelAgencyDaoMemory();
+            _userDataDaoMemory = new UserDataDaoMemory();
         }
         
         [TestCase(1)]
@@ -31,7 +32,7 @@ namespace Codecool.CodecoolShop.Test
         [Test]
         public void StatusDaoMemory_DataBase_SelectAllStatuses()
         {
-            int length = 3;
+            int length = 1;
             var result = _statusDaoMemory.GetAll();
             Assert.AreEqual(length, result.Count());
         }
@@ -43,19 +44,19 @@ namespace Codecool.CodecoolShop.Test
             int prevLength = _statusDaoMemory.GetAll().Count();
             _statusDaoMemory.Add(status);
             int newLength = _statusDaoMemory.GetAll().Count();
-            var result = _statusDaoMemory.Get(newLength + 1);
+            var result = _statusDaoMemory.Get(newLength);
             
             Assert.AreEqual(prevLength + 1, newLength);
             Assert.AreEqual(status, result);
         }
 
-        [TestCase(2)]
+        [TestCase(10)]
         public void StatusDao_DataBase_RemoveFromDB(int id)
         {
             int prevLength = _statusDaoMemory.GetAll().Count();
             _statusDaoMemory.Remove(id);
             int newLength = _statusDaoMemory.GetAll().Count();
-            var result = _statusDaoMemory.Get(2);
+            var result = _statusDaoMemory.Get(id);
             
             Assert.AreEqual(prevLength - 1, newLength);
             Assert.AreEqual(null, result);
@@ -85,13 +86,13 @@ namespace Codecool.CodecoolShop.Test
             int prevLength = _travelAgencyDaoMemory.GetAll().Count();
             _travelAgencyDaoMemory.Add(travelAgency);
             int newLength = _travelAgencyDaoMemory.GetAll().Count();
-            var result = _travelAgencyDaoMemory.Get(2);
+            var result = _travelAgencyDaoMemory.Get(11);
             
             Assert.AreEqual(prevLength + 1, newLength);
             Assert.AreEqual(travelAgency, result);
         }
-
-        [TestCase(2)]
+        
+        [TestCase(11)]
         public void TravelAgencyDao_DataBase_RemoveTravelAgencyFromDB(int id)
         {
             int prevLength = _travelAgencyDaoMemory.GetAll().Count();
@@ -122,7 +123,7 @@ namespace Codecool.CodecoolShop.Test
             Assert.AreEqual(user.AddressData, result.AddressData);
             Assert.AreEqual(user.PhoneNumber, result.PhoneNumber);
         }
-
+        
         [Test]
         public void UserDataDaoMemory_DataBase_SelectAllUserData()
         {

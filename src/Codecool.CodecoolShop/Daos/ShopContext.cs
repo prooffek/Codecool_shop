@@ -23,7 +23,6 @@ namespace Codecool.CodecoolShop.Daos
         public DbSet<Status> OrderStatus { get; set; }
         public DbSet<TravelAgency> TravelAgency { get; set; }
         public DbSet<UserData> User { get; set; }
-        public DbSet<AddressData> AddressData { get; set; }
 
         /*
         protected override void OnModelCreating(ModelBuilder modelBuilder)

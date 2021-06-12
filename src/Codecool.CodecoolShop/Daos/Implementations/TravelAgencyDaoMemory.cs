@@ -46,6 +46,7 @@ namespace Codecool.CodecoolShop.Daos.Implementations
 
         public TravelAgency Get(int id)
         {
+            var agency = _shopContext.TravelAgency.Find(id);
             return _shopContext.TravelAgency.Find(id);
             //return data.Find(x => x.Id == id);
         }
