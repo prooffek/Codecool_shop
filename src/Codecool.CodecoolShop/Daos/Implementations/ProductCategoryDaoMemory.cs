@@ -1,48 +1,65 @@
 using System.Collections.Generic;
+using System.Linq;
 using Codecool.CodecoolShop.Models;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Configuration;
+using Microsoft.EntityFrameworkCore;
 
 namespace Codecool.CodecoolShop.Daos.Implementations
 {
     class ProductCategoryDaoMemory : IProductCategoryDao
     {
-        private List<ProductCategory> data = new List<ProductCategory>();
+        private ShopContext _context;
+        private List<ProductCategory> _data;
+
+        private IConfiguration _Configuration { get; set; }
+        //private List<ProductCategory> data = new List<ProductCategory>();
         private static ProductCategoryDaoMemory instance = null;
 
-        private ProductCategoryDaoMemory()
+        
+
+        public ProductCategoryDaoMemory(IConfiguration configuration)
         {
+            _context = new ShopContext(configuration);
+            _data = _context.ProductCategories.ToList();
+            
         }
 
-        public static ProductCategoryDaoMemory GetInstance()
+        public static ProductCategoryDaoMemory GetInstance(IConfiguration configuration)
         {
             if (instance == null)
             {
-                instance = new ProductCategoryDaoMemory();
+                instance = new ProductCategoryDaoMemory(configuration);
             }
-
             return instance;
         }
 
         public void Add(ProductCategory item)
         {
-            item.Id = data.Count + 1;
-            data.Add(item);
+            _context.ProductCategories.Add(item);
+            _context.SaveChanges();
         }
 
         public void Remove(int id)
         {
-            data.Remove(this.Get(id));
+            var itemToRemove = this.Get(id);
+            if (itemToRemove != null)
+            {
+                _context.ProductCategories.Remove(itemToRemove);
+                _context.SaveChanges();
+            }
+            
         }
 
         public ProductCategory Get(int id)
         {
-            return data.Find(x => x.Id == id);
+            return _context.ProductCategories.FirstOrDefault(pc => pc.Id == id);
         }
-
-
+        
 
         public IEnumerable<ProductCategory> GetAll()
         {
-            return data;
+            return _data;
         }
     }
 }

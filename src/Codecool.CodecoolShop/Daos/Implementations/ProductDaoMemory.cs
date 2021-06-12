@@ -3,23 +3,27 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Codecool.CodecoolShop.Models;
+using Microsoft.Extensions.Configuration;
 
 namespace Codecool.CodecoolShop.Daos.Implementations
 {
     public class ProductDaoMemory : IProductDao
     {
-        private List<Product> data = new List<Product>();
+        private List<Product> _data = new List<Product>();
         private static ProductDaoMemory instance = null;
+        private ShopContext _context;
 
-        private ProductDaoMemory()
+        public ProductDaoMemory(IConfiguration configuration)
         {
+            _context = new ShopContext(configuration);
+            _data = _context.Product.ToList();
         }
 
-        public static ProductDaoMemory GetInstance()
+        public static ProductDaoMemory GetInstance(IConfiguration configuration)
         {
             if (instance == null)
             {
-                instance = new ProductDaoMemory();
+                instance = new ProductDaoMemory(configuration);
             }
 
             return instance;
@@ -27,38 +31,43 @@ namespace Codecool.CodecoolShop.Daos.Implementations
 
         public void Add(Product item)
         {
-            item.Id = data.Count + 1;
-            data.Add(item);
+            _context.Product.Add(item);
+            _context.SaveChanges();
         }
 
         public void Remove(int id)
         {
-            data.Remove(this.Get(id));
+            var itemToRemove = this.Get(id);
+            if (itemToRemove != null)
+            {
+                _context.Product.Remove(itemToRemove);
+                _context.SaveChanges();
+            }
         }
 
         public Product Get(int id)
         {
-            return data.Find(x => x.Id == id);
+            return _context.Product.FirstOrDefault(pc => pc.Id == id);
         }
 
         public IEnumerable<Product> GetAll()
         {
-            return data;
+            return _data;
         }
 
         public IEnumerable<Product> GetBy(TravelAgency travelAgency)
         {
-            return data.Where(x => x.TravelAgency.Id == travelAgency.Id);
+            return _data.Where(x => x.TravelAgency.Id == travelAgency.Id).ToList();
         }
 
         public IEnumerable<Product> GetBy(ProductCategory productCategory)
         {
-            return data.Where(x => x.ProductCategory.Id == productCategory.Id);
+            return _data.Where(x => x.ProductCategory.Id == productCategory.Id).ToList();
         }
 
         public IEnumerable<Product> GetBy(Country country)
         {
-            return data.Where(x => x.Country.Id == country.Id);
+            return _data.Where(x => x.Country.Id == country.Id).ToList();
         }
     }
 }

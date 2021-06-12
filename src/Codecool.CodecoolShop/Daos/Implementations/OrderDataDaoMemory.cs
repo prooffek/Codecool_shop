@@ -1,28 +1,42 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Codecool.CodecoolShop.Models;
+using Microsoft.Extensions.Configuration;
 
 namespace Codecool.CodecoolShop.Daos.Implementations
 {
     public class OrderDataDaoMemory : IOrderDataDao
     {
+        private ShopContext _context;
+        public OrderDataDaoMemory(IConfiguration configuration)
+        {
+            _context = new ShopContext(configuration);
+        }
+
         public void Add(OrderData item)
         {
-            throw new System.NotImplementedException();
+            _context.OrderDatas.Add(item);
+            _context.SaveChanges();
         }
 
         public void Remove(int id)
         {
-            throw new System.NotImplementedException();
+            var itemToRemove = this.Get(id);
+            if (itemToRemove != null)
+            {
+                _context.OrderDatas.Remove(itemToRemove);
+                _context.SaveChanges();
+            }
         }
 
         public OrderData Get(int id)
         {
-            throw new System.NotImplementedException();
+            return _context.OrderDatas.FirstOrDefault(od => od.Id == id);
         }
 
         public IEnumerable<OrderData> GetAll()
         {
-            throw new System.NotImplementedException();
+            return _context.OrderDatas.ToList();
         }
     }
 }
