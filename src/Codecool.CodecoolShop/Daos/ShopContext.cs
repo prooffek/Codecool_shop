@@ -20,11 +20,17 @@ namespace Codecool.CodecoolShop.Daos
         */
         
         public DbSet<Product> Product { get; set; }
+
+        public DbSet<ProductCategory> ProductCategories { get; set; }
+
+        public DbSet<OrderData> OrderDatas { get; set; }
+
         public DbSet<Status> OrderStatus { get; set; }
         public DbSet<TravelAgency> TravelAgency { get; set; }
         public DbSet<UserData> User { get; set; }
         public DbSet<AddressData> AddressData { get; set; }
         
+
         /*
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -35,7 +41,7 @@ namespace Codecool.CodecoolShop.Daos
             base.OnModelCreating(modelBuilder);
         }
         */
-
+    
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder
