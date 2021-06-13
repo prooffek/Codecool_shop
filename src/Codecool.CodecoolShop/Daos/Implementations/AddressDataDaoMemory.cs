@@ -26,10 +26,7 @@ namespace Codecool.CodecoolShop.Daos.Implementations
 
         public AddressData Get(int id)
         {
-            return _shopContext.AddressDatas.FirstOrDefault(adress => adress.Id == id);
-            // var address = _shopContext.AddressData.Find(id);
-            // return address;
-            //throw new System.NotImplementedException();
+            return _shopContext.AddressDatas.Find(id);
         }
 
         public IEnumerable<AddressData> GetAll()
