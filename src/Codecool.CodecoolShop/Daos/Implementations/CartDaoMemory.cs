@@ -1,28 +1,34 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Codecool.CodecoolShop.Models;
+
 
 namespace Codecool.CodecoolShop.Daos.Implementations
 {
     public class CartDaoMemory: ICartDao
     {
+        private ShopContext _shopContext = new ShopContext();
         public void Add(Cart item)
         {
-            throw new System.NotImplementedException();
+            _shopContext.Cart.Add(item);
+            _shopContext.SaveChanges();
         }
 
         public void Remove(int id)
         {
-            throw new System.NotImplementedException();
+            var cart = _shopContext.Cart.First(cart => cart.Id == id);
+            _shopContext.Cart.Remove(cart);
+            _shopContext.SaveChanges();
         }
 
         public Cart Get(int id)
         {
-            throw new System.NotImplementedException();
+            return _shopContext.Cart.FirstOrDefault(cart => cart.Id == id);
         }
 
         public IEnumerable<Cart> GetAll()
         {
-            throw new System.NotImplementedException();
+            return _shopContext.Cart.ToList();
         }
     }
 }

@@ -13,6 +13,9 @@ namespace Codecool.CodecoolShop.Models
         public string ImgName { get; set; }
         public ProductCategory ProductCategory { get; set; }
         public TravelAgency TravelAgency { get; set; }
+        public int ProductCategoryId { get; set; }
+        public int CountryId { get; set; }
+        public int TravelAgencyId { get; set; }
 
         public void SetProductCategory(ProductCategory productCategory)
         {
