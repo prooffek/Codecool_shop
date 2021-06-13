@@ -11,7 +11,7 @@ namespace Codecool.CodecoolShop.Daos.Implementations
         // private List<Country> data = new List<Country>();
         private static CountryDaoMemory instance = null;
 
-        private CountryDaoMemory()
+        public CountryDaoMemory()
         {
         }
 
