@@ -11,7 +11,7 @@ create table [Address Data]
 go
 
 create unique index [Address Data_Id_uindex]
-    on [Address Data] (Id)
+    on AddressData (Id)
 go
 
 create table Cart
@@ -139,7 +139,7 @@ create table [User]
     Password      nvarchar(255),
     AddressDataId int
         constraint [User_Address Data_Id_fk]
-            references [Address Data],
+            references AddressData,
     PhoneNumber   nvarchar(255)
 )
 go

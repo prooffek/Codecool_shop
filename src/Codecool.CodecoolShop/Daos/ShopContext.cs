@@ -10,20 +10,34 @@ namespace Codecool.CodecoolShop.Daos
 {
     public class ShopContext : DbContext
     {
-        private readonly string _connectionString; 
+        private readonly string _connectionString = "Data Source=.;Database=CodecoolTravel;Integrated Security=true";
+
+        /*
         public ShopContext(IConfiguration configuration)
         {
             _connectionString = configuration.GetConnectionString("ShopDb");
         }
+        */
         
         public DbSet<Product> Product { get; set; }
+
         public DbSet<ProductCategory> ProductCategories { get; set; }
 
         public DbSet<OrderData> OrderDatas { get; set; }
+
+        public DbSet<Status> OrderStatus { get; set; }
+        public DbSet<TravelAgency> TravelAgency { get; set; }
+        public DbSet<UserData> User { get; set; }
+        public DbSet<AddressData> AddressData { get; set; }
+        
+
         /*
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Product>();
+            modelBuilder.Entity<UserData>()
+                .HasOne(user => user.AddressData)
+                .WithOne(adr => adr.User)
+                .HasForeignKey<UserData>(usr => usr.AddressDataId);
             base.OnModelCreating(modelBuilder);
         }
         */

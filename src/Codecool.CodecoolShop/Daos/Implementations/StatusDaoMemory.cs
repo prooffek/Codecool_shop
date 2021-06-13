@@ -1,28 +1,39 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Codecool.CodecoolShop.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Codecool.CodecoolShop.Daos.Implementations
 {
     public class StatusDaoMemory : IStatusDao
     {
+        private ShopContext _shopContext;
+
+        public StatusDaoMemory()
+        {
+            _shopContext = new ShopContext();
+        }
         public void Add(Status item)
         {
-            throw new System.NotImplementedException();
+            _shopContext.Add(item);
+            _shopContext.SaveChanges();
         }
 
         public void Remove(int id)
         {
-            throw new System.NotImplementedException();
+            Status statusToRemove = Get(id);
+            _shopContext.Remove(statusToRemove);
+            _shopContext.SaveChanges();
         }
 
         public Status Get(int id)
         {
-            throw new System.NotImplementedException();
+            return _shopContext.OrderStatus.Find(id);
         }
 
         public IEnumerable<Status> GetAll()
         {
-            throw new System.NotImplementedException();
+            return _shopContext.OrderStatus.OrderBy(status => status.Name);
         }
     }
 }

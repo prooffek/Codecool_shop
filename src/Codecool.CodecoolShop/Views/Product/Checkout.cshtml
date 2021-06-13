@@ -35,7 +35,7 @@
             @Html.TextBoxFor(x => x.BillingAddress.ZipCode)<br/>
             
             @Html.Label("Adres:")<br/>
-            @Html.TextBoxFor(x => x.BillingAddress.Address)<br/>
+            @Html.TextBoxFor(x => x.BillingAddress.Street)<br/>
         </div>
         <br/>
         <div>
@@ -50,7 +50,7 @@
             @Html.TextBoxFor(x => x.ShippingAddress.ZipCode)<br/>
             
             @Html.Label("Adres:")<br/>
-            @Html.TextBoxFor(x => x.ShippingAddress.Address)<br/>
+            @Html.TextBoxFor(x => x.ShippingAddress.Street)<br/>
         </div>
         <br/>
         <button type="submit" class="btn btn-primary">Przejdź do płatności</button>

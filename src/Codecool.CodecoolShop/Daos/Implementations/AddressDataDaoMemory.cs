@@ -5,6 +5,11 @@ namespace Codecool.CodecoolShop.Daos.Implementations
 {
     public class AddressDataDaoMemory : IAddressDataDao
     {
+        private ShopContext _shopContext;
+        public AddressDataDaoMemory()
+        {
+            _shopContext = new ShopContext();
+        }
         public void Add(AddressData item)
         {
             throw new System.NotImplementedException();
@@ -17,7 +22,9 @@ namespace Codecool.CodecoolShop.Daos.Implementations
 
         public AddressData Get(int id)
         {
-            throw new System.NotImplementedException();
+            var address = _shopContext.AddressData.Find(id);
+            return address;
+            //throw new System.NotImplementedException();
         }
 
         public IEnumerable<AddressData> GetAll()
