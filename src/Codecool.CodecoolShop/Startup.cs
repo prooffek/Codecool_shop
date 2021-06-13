@@ -78,8 +78,8 @@ namespace Codecool.CodecoolShop
         private void SetupInMemoryDatabases()
         {
             IProductDao productDataStore = ProductDaoMemory.GetInstance();
-            IProductCategoryDao productCategoryDataStore = ProductCategoryDaoMemory.GetInstance(Configuration);
-            IProductCategoryDao proTemp = new ProductCategoryDaoMemory(Configuration);
+            IProductCategoryDao productCategoryDataStore = ProductCategoryDaoMemory.GetInstance();
+            IProductCategoryDao proTemp = new ProductCategoryDaoMemory();
             
             /*
             ISupplierDao supplierDataStore = SupplierDaoMemory.GetInstance();

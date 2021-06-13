@@ -1,35 +1,37 @@
 ﻿using System.Collections.Generic;
 using Codecool.CodecoolShop.Models;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
+
 
 namespace Codecool.CodecoolShop.Daos.Implementations
 {
     public class AddressDataDaoMemory : IAddressDataDao
     {
-        private ShopContext _shopContext;
-        public AddressDataDaoMemory()
-        {
-            _shopContext = new ShopContext();
-        }
+        private ShopContext _shopContext = new ShopContext();
+        
         public void Add(AddressData item)
         {
-            throw new System.NotImplementedException();
+            _shopContext.AddressData.Add(item);
+            _shopContext.SaveChanges();
         }
 
         public void Remove(int id)
         {
-            throw new System.NotImplementedException();
+            var addressData = _shopContext.AddressData.First(address => address.Id == id);
+            _shopContext.AddressData.Remove(addressData);
+            _shopContext.SaveChanges();
         }
 
         public AddressData Get(int id)
         {
-            var address = _shopContext.AddressData.Find(id);
-            return address;
-            //throw new System.NotImplementedException();
+            return _shopContext.AddressData.Find(id);
         }
 
         public IEnumerable<AddressData> GetAll()
-        {
-            throw new System.NotImplementedException();
+        { 
+            return _shopContext.AddressData.ToList();
         }
     }
 }
