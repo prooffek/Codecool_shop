@@ -47,5 +47,17 @@ namespace Codecool.CodecoolShop.Models
             if (CartItems.Contains(cartItem))
                 cartItem.IncrementQuantity();
         }
+
+        public override string ToString()
+        {
+            string s = $"";
+            foreach (var cartItem in CartItems)
+            {
+                s += $"Nazwa produktu: {cartItem.Product.Name}. Ilość: {cartItem.Quantity} \n";
+            }
+
+            s += $"Suma: {this.Sum}";
+            return s;
+        }
     }
 }

@@ -26,7 +26,8 @@ namespace Codecool.CodecoolShop.Controllers
         public FilterServices FilterServices { get; set; }
         public CartService CartService { get; set; }
         public CountryService CountryService { get; set; }
-        
+        public SendEmailService SendEmailService { get; set; }
+
         public ProductController(ILogger<ProductController> logger)
         {
             _logger = logger;
@@ -48,16 +49,17 @@ namespace Codecool.CodecoolShop.Controllers
                 CountryDaoMemory.GetInstance(),
                 ProductService);
             FilterServices = new FilterServices(TravelAgencyService, ProductService, CountryService, CategoryService);
+            SendEmailService = new SendEmailService();
         }
 
         public IActionResult Index()
         {
             var shopModel = new ShopModel(ProductService);
             // var cart = SessionHelper.GetObjectFromJson<Cart>(HttpContext.Session, "cart");
-            
+
             return View(shopModel);
         }
-        
+
         public IActionResult Privacy()
         {
             return View();
@@ -68,7 +70,7 @@ namespace Codecool.CodecoolShop.Controllers
             shopModel = FilterServices.Filter(shopModel);
             return View("Index", shopModel);
         }
-        
+
         /*
         public IActionResult FilteredByTravelAgency(ShopModel shopModel)
         {
@@ -112,12 +114,12 @@ namespace Codecool.CodecoolShop.Controllers
 
         }
         */
-        
+
         public IActionResult Error()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View(new ErrorViewModel {RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier});
         }
-        
+
         [Route("/cart")]
         public IActionResult ReviewCart()
         {
@@ -168,7 +170,7 @@ namespace Codecool.CodecoolShop.Controllers
         {
             var checkout = SessionHelper.GetObjectFromJson<Checkout>(HttpContext.Session, "checkout") ?? new Checkout();
             SessionHelper.SetObjectAsJson(HttpContext.Session, "checkout", checkout);
-            
+
             return View("Checkout", checkout);
         }
 
@@ -181,7 +183,7 @@ namespace Codecool.CodecoolShop.Controllers
         public IActionResult Payment(Checkout checkout)
         {
             SaveCheckoutData(checkout);
-            
+
             var cart = SessionHelper.GetObjectFromJson<Cart>(HttpContext.Session, "cart");
             if (cart.Sum == 0)
             {
@@ -195,7 +197,7 @@ namespace Codecool.CodecoolShop.Controllers
                 payment.CardHolder = checkout.Name ?? "Jan Kowalski";
                 return View("Payment", payment);
             }
-            
+
         }
 
         public IActionResult CheckPayment(Payment payment)
@@ -205,6 +207,7 @@ namespace Codecool.CodecoolShop.Controllers
                 var cart = SessionHelper.GetObjectFromJson<Cart>(HttpContext.Session, "cart");
                 if (cart == null) cart = new Cart();
                 cart.CountSum();
+                SendEmailService.SendEmail("ewelina.stasiak5@gmail.com", cart);
                 return View("OrderConfirmation", cart);
             }
 
@@ -212,3 +215,5 @@ namespace Codecool.CodecoolShop.Controllers
         }
     }
 }
+
+
