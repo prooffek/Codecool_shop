@@ -27,25 +27,25 @@ namespace Codecool.CodecoolShop.Daos.Implementations
 
         public void Add(Country item)
         {
-            _shopContext.Countries.Add(item);
+            _shopContext.Country.Add(item);
             _shopContext.SaveChanges();
         }
 
         public void Remove(int id)
         {
-            var country = _shopContext.Countries.First(countryData => countryData.Id == id);
-            _shopContext.Countries.Remove(country);
+            var country = _shopContext.Country.First(countryData => countryData.Id == id);
+            _shopContext.Country.Remove(country);
             _shopContext.SaveChanges();
         }
 
         public Country Get(int id)
         {
-            return _shopContext.Countries.FirstOrDefault(country => country.Id == id);
+            return _shopContext.Country.FirstOrDefault(country => country.Id == id);
         }
 
         public IEnumerable<Country> GetAll()
         {
-            return _shopContext.Countries.ToList();
+            return _shopContext.Country.ToList();
         }
     }
 }

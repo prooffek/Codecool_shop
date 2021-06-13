@@ -1,15 +1,22 @@
 using System.Collections.Generic;
+using System.Linq;
 using Codecool.CodecoolShop.Models;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Configuration;
+using Microsoft.EntityFrameworkCore;
 
 namespace Codecool.CodecoolShop.Daos.Implementations
 {
-    class ProductCategoryDaoMemory : IProductCategoryDao
+    public class ProductCategoryDaoMemory : IProductCategoryDao
     {
-        private List<ProductCategory> data = new List<ProductCategory>();
+        private ShopContext _context;
+        private List<ProductCategory> _data;
         private static ProductCategoryDaoMemory instance = null;
 
-        private ProductCategoryDaoMemory()
+        public ProductCategoryDaoMemory()
         {
+            _context = new ShopContext();
+            //_data = _context.ProductCategory.ToList();
         }
 
         public static ProductCategoryDaoMemory GetInstance()
@@ -18,31 +25,35 @@ namespace Codecool.CodecoolShop.Daos.Implementations
             {
                 instance = new ProductCategoryDaoMemory();
             }
-
             return instance;
         }
 
         public void Add(ProductCategory item)
         {
-            item.Id = data.Count + 1;
-            data.Add(item);
+            _context.ProductCategory.Add(item);
+            _context.SaveChanges();
         }
 
         public void Remove(int id)
         {
-            data.Remove(this.Get(id));
+            var itemToRemove = this.Get(id);
+            if (itemToRemove != null)
+            {
+                _context.ProductCategory.Remove(itemToRemove);
+                _context.SaveChanges();
+            }
+            
         }
 
         public ProductCategory Get(int id)
         {
-            return data.Find(x => x.Id == id);
+            return _context.ProductCategory.FirstOrDefault(pc => pc.Id == id);
         }
-
-
+        
 
         public IEnumerable<ProductCategory> GetAll()
         {
-            return data;
+            return _context.ProductCategory.OrderBy(pc => pc.Name);
         }
     }
 }

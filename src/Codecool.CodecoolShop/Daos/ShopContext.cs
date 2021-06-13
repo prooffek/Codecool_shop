@@ -20,22 +20,26 @@ namespace Codecool.CodecoolShop.Daos
         */
         
         public DbSet<Product> Product { get; set; }
-        public DbSet<AddressData> AddressDatas { get; set; }
-        public DbSet<Cart> Carts { get; set; }
-        public DbSet<CartItem> CartItems { get; set; }
-        public DbSet<Country> Countries { get; set; }
+        public DbSet<AddressData> AddressData { get; set; }
+        public DbSet<Cart> Cart { get; set; }
+        public DbSet<CartItem> CartItems{ get; set; }
+        public DbSet<Country> Country { get; set; }
+
+
+        public DbSet<ProductCategory> ProductCategory { get; set; }
+
+        public DbSet<OrderData> OrderData { get; set; }
 
         public DbSet<Status> OrderStatus { get; set; }
         public DbSet<TravelAgency> TravelAgency { get; set; }
         public DbSet<UserData> User { get; set; }
-        public DbSet<AddressData> AddressData { get; set; }
-        
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Cart>()
                 .HasMany(cart => cart.CartItems)
-                .WithOne()
-                .OnDelete(DeleteBehavior.Cascade);
+                .WithOne();
+                
 
             modelBuilder.Entity<CartItem>()
                 .HasOne(cart => cart.Product)
