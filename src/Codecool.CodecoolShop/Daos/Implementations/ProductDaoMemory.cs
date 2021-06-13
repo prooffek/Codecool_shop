@@ -12,20 +12,21 @@ namespace Codecool.CodecoolShop.Daos.Implementations
         private List<Product> _data = new List<Product>();
         private static ProductDaoMemory instance = null;
         private ShopContext _context;
+        
 
-        public ProductDaoMemory(IConfiguration configuration)
+        public ProductDaoMemory()
         {
-            _context = new ShopContext(configuration);
-            _data = _context.Product.ToList();
+            
+            _context = new ShopContext();
+            //_data = _context.Product.ToList();
         }
 
-        public static ProductDaoMemory GetInstance(IConfiguration configuration)
+        public static ProductDaoMemory GetInstance()
         {
             if (instance == null)
             {
-                instance = new ProductDaoMemory(configuration);
+                instance = new ProductDaoMemory();
             }
-
             return instance;
         }
 
@@ -47,27 +48,61 @@ namespace Codecool.CodecoolShop.Daos.Implementations
 
         public Product Get(int id)
         {
-            return _context.Product.FirstOrDefault(pc => pc.Id == id);
+            var product = _context.Product.Find(id);
+            product = FillEmptyProperty(product);
+            return product;
+        }
+
+        private Product FillEmptyProperty(Product product)
+        {
+            
+            product.ProductCategory = new ProductCategoryDaoMemory().Get(product.ProductCategoryId);
+            product.Country = new CountryDaoMemory().Get(product.CountryId);
+            product.TravelAgency = new TravelAgencyDaoMemory().Get(product.TravelAgencyId);
+            return product;
         }
 
         public IEnumerable<Product> GetAll()
         {
-            return _data;
+            return _context.Product.OrderBy(p => p.Name);
         }
 
         public IEnumerable<Product> GetBy(TravelAgency travelAgency)
         {
-            return _data.Where(x => x.TravelAgency.Id == travelAgency.Id).ToList();
+            IEnumerable<Product> ProductsByCategory = new List<Product>();
+            var productCategoryId = travelAgency.Id;
+            var temp =_context.Product.Where(x => x.ProductCategoryId == productCategoryId).ToList();
+            foreach (var element in temp)
+            {
+                ProductsByCategory.Append(FillEmptyProperty(element));
+            }
+
+            return ProductsByCategory;
         }
 
         public IEnumerable<Product> GetBy(ProductCategory productCategory)
         {
-            return _data.Where(x => x.ProductCategory.Id == productCategory.Id).ToList();
+            IEnumerable<Product> ProductsByCategory = new List<Product>();
+            var productCategoryId = productCategory.Id;
+            var temp =_context.Product.Where(x => x.ProductCategoryId == productCategoryId).ToList();
+            foreach (var element in temp)
+            {
+                ProductsByCategory.Append(FillEmptyProperty(element));
+            }
+            return ProductsByCategory;
         }
 
         public IEnumerable<Product> GetBy(Country country)
         {
-            return _data.Where(x => x.Country.Id == country.Id).ToList();
+            IEnumerable<Product> ProductsByCategory = new List<Product>();
+            var productCategoryId = country.Id;
+            var temp =_context.Product.Where(x => x.ProductCategoryId == productCategoryId).ToList();
+            foreach (var element in temp)
+            {
+                ProductsByCategory.Append(FillEmptyProperty(element));
+            }
+
+            return ProductsByCategory;
         }
     }
 }

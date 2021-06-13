@@ -7,36 +7,30 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Codecool.CodecoolShop.Daos.Implementations
 {
-    class ProductCategoryDaoMemory : IProductCategoryDao
+    public class ProductCategoryDaoMemory : IProductCategoryDao
     {
         private ShopContext _context;
         private List<ProductCategory> _data;
-
-        private IConfiguration _Configuration { get; set; }
-        //private List<ProductCategory> data = new List<ProductCategory>();
         private static ProductCategoryDaoMemory instance = null;
 
-        
-
-        public ProductCategoryDaoMemory(IConfiguration configuration)
+        public ProductCategoryDaoMemory()
         {
-            _context = new ShopContext(configuration);
-            _data = _context.ProductCategories.ToList();
-            
+            _context = new ShopContext();
+            //_data = _context.ProductCategory.ToList();
         }
 
-        public static ProductCategoryDaoMemory GetInstance(IConfiguration configuration)
+        public static ProductCategoryDaoMemory GetInstance()
         {
             if (instance == null)
             {
-                instance = new ProductCategoryDaoMemory(configuration);
+                instance = new ProductCategoryDaoMemory();
             }
             return instance;
         }
 
         public void Add(ProductCategory item)
         {
-            _context.ProductCategories.Add(item);
+            _context.ProductCategory.Add(item);
             _context.SaveChanges();
         }
 
@@ -45,7 +39,7 @@ namespace Codecool.CodecoolShop.Daos.Implementations
             var itemToRemove = this.Get(id);
             if (itemToRemove != null)
             {
-                _context.ProductCategories.Remove(itemToRemove);
+                _context.ProductCategory.Remove(itemToRemove);
                 _context.SaveChanges();
             }
             
@@ -53,13 +47,13 @@ namespace Codecool.CodecoolShop.Daos.Implementations
 
         public ProductCategory Get(int id)
         {
-            return _context.ProductCategories.FirstOrDefault(pc => pc.Id == id);
+            return _context.ProductCategory.FirstOrDefault(pc => pc.Id == id);
         }
         
 
         public IEnumerable<ProductCategory> GetAll()
         {
-            return _data;
+            return _context.ProductCategory.OrderBy(pc => pc.Name);
         }
     }
 }

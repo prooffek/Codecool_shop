@@ -8,14 +8,14 @@ namespace Codecool.CodecoolShop.Daos.Implementations
     public class OrderDataDaoMemory : IOrderDataDao
     {
         private ShopContext _context;
-        public OrderDataDaoMemory(IConfiguration configuration)
+        public OrderDataDaoMemory()
         {
-            _context = new ShopContext(configuration);
+            _context = new ShopContext();
         }
 
         public void Add(OrderData item)
         {
-            _context.OrderDatas.Add(item);
+            _context.OrderData.Add(item);
             _context.SaveChanges();
         }
 
@@ -24,19 +24,19 @@ namespace Codecool.CodecoolShop.Daos.Implementations
             var itemToRemove = this.Get(id);
             if (itemToRemove != null)
             {
-                _context.OrderDatas.Remove(itemToRemove);
+                _context.OrderData.Remove(itemToRemove);
                 _context.SaveChanges();
             }
         }
 
         public OrderData Get(int id)
         {
-            return _context.OrderDatas.FirstOrDefault(od => od.Id == id);
+            return _context.OrderData.FirstOrDefault(od => od.Id == id);
         }
 
         public IEnumerable<OrderData> GetAll()
         {
-            return _context.OrderDatas.ToList();
+            return _context.OrderData.OrderBy(pc => pc.Id);
         }
     }
 }
