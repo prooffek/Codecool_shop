@@ -30,6 +30,19 @@ namespace Codecool.CodecoolShop.Daos
         public DbSet<UserData> User { get; set; }
         public DbSet<AddressData> AddressData { get; set; }
         
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Cart>()
+                .HasMany(cart => cart.CartItems)
+                .WithOne()
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<CartItem>()
+                .HasOne(cart => cart.Product)
+                .WithOne();
+
+        }
+        
         /*
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
