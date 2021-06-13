@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using Codecool.CodecoolShop.Daos.Implementations;
 using Codecool.CodecoolShop.Models;
@@ -11,7 +12,7 @@ namespace Codecool.CodecoolShop.Test
         private StatusDaoMemory _statusDaoMemory;
         private TravelAgencyDaoMemory _travelAgencyDaoMemory;
         private UserDataDaoMemory _userDataDaoMemory;
-        
+
         [SetUp]
         public void Setup()
         {
@@ -19,7 +20,7 @@ namespace Codecool.CodecoolShop.Test
             _travelAgencyDaoMemory = new TravelAgencyDaoMemory();
             _userDataDaoMemory = new UserDataDaoMemory();
         }
-        
+
         [TestCase(1)]
         public void StatusDaoMemory_DataBase_SelectStatusById(int id)
         {
@@ -50,7 +51,7 @@ namespace Codecool.CodecoolShop.Test
             Assert.AreEqual(status, result);
         }
 
-        [TestCase(10)]
+        [TestCase(11)]
         public void StatusDao_DataBase_RemoveFromDB(int id)
         {
             int prevLength = _statusDaoMemory.GetAll().Count();
@@ -121,7 +122,7 @@ namespace Codecool.CodecoolShop.Test
                 LastName = "last name",
                 Email = "1st@gmail.com",
                 Password = "1234",
-                AddressData = addressData,
+                AddressData = new List<AddressData>() { addressData },
                 PhoneNumber = "123456789"
             };
             var result = _userDataDaoMemory.Get(id);
@@ -129,11 +130,11 @@ namespace Codecool.CodecoolShop.Test
             Assert.AreEqual(user.LastName, result.LastName);
             Assert.AreEqual(user.Email, result.Email);
             Assert.AreEqual(user.Password, result.Password);
-            Assert.AreEqual(user.AddressData.Country, result.AddressData.Country);
-            Assert.AreEqual(user.AddressData.City, result.AddressData.City);
-            Assert.AreEqual(user.AddressData.Street, result.AddressData.Street);
-            Assert.AreEqual(user.AddressData.ZipCode, result.AddressData.ZipCode);
-            Assert.AreEqual(user.AddressData.Id, result.AddressData.Id);
+            Assert.AreEqual(user.AddressData[0].Country, result.AddressData[0].Country);
+            Assert.AreEqual(user.AddressData[0].City, result.AddressData[0].City);
+            Assert.AreEqual(user.AddressData[0].Street, result.AddressData[0].Street);
+            Assert.AreEqual(user.AddressData[0].ZipCode, result.AddressData[0].ZipCode);
+            Assert.AreEqual(user.AddressData[0].Id, result.AddressData[0].Id);
             Assert.AreEqual(user.PhoneNumber, result.PhoneNumber);
         }
         

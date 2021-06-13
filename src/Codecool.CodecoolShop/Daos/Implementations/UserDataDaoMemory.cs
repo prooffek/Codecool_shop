@@ -36,9 +36,8 @@ namespace Codecool.CodecoolShop.Daos.Implementations
         public UserData Get(int id)
         {
             var user = _shopContext.User.Find(id);
-            user.AddressData = _shopContext.AddressData.Find(user.AddressDataId);
+            _shopContext.Entry(user).Collection(usr => usr.AddressData).Load();
             return user;
-            //throw new System.NotImplementedException();
         }
 
         public IEnumerable<UserData> GetAll()

@@ -34,16 +34,15 @@ namespace Codecool.CodecoolShop.Daos
         public DbSet<UserData> User { get; set; }
         public DbSet<AddressData> AddressData { get; set; }
         
-        /*
+        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<UserData>()
-                .HasOne(user => user.AddressData)
+                .HasMany(usr => usr.AddressData)
                 .WithOne(adr => adr.User)
-                .HasForeignKey<UserData>(usr => usr.AddressDataId);
+                .HasForeignKey(adr => adr.UserId);
             base.OnModelCreating(modelBuilder);
         }
-        */
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

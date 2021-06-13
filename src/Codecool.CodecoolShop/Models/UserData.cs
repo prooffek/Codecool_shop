@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Codecool.CodecoolShop.Models
 {
@@ -10,9 +11,9 @@ namespace Codecool.CodecoolShop.Models
         public string Email { get; set; }
         public string Password { get; set; }
         public string PhoneNumber { get; set; }
-        public int AddressDataId { get; set; }
+        //public int AddressDataId { get; set; }
         
         //navigation propert
-        public AddressData AddressData { get; set; }
+        public List<AddressData> AddressData { get; set; }
     }
 }
