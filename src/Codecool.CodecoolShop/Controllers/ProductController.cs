@@ -27,10 +27,16 @@ namespace Codecool.CodecoolShop.Controllers
         public CartService CartService { get; set; }
         public CountryService CountryService { get; set; }
         public SendEmailService SendEmailService { get; set; }
+        
+        //Contexts
+        public ShopContext ShopContext { get; set; }
+        public ProductDaoMemory ProductContext { get; set; }
 
-        public ProductController(ILogger<ProductController> logger)
+        public ProductController(ILogger<ProductController> logger, ShopContext shopContext)
         {
             _logger = logger;
+            
+            //Services
             ProductService = new ProductService(
                 ProductDaoMemory.GetInstance(),
                 ProductCategoryDaoMemory.GetInstance(),
@@ -48,16 +54,19 @@ namespace Codecool.CodecoolShop.Controllers
             CountryService = new CountryService(ProductDaoMemory.GetInstance(),
                 CountryDaoMemory.GetInstance(),
                 ProductService);
-            FilterServices = new FilterServices(TravelAgencyService, ProductService, CountryService, CategoryService);
             SendEmailService = new SendEmailService();
+
+            //Contexts
+            ShopContext = shopContext;
+            ProductContext = new ProductDaoMemory(shopContext);
+
+            //DB Services
+            FilterServices = new FilterServices(ProductContext);
         }
 
         public IActionResult Index()
         {
-            var shopModel = new ShopModel();
-            //var shopModel = new ShopModel(ProductService);
-            // var cart = SessionHelper.GetObjectFromJson<Cart>(HttpContext.Session, "cart");
-
+            var shopModel = new ShopModel(ProductContext);
             return View(shopModel);
         }
 
@@ -72,28 +81,6 @@ namespace Codecool.CodecoolShop.Controllers
             return View("Index", shopModel);
         }
 
-        /*
-        public IActionResult FilteredByTravelAgency(ShopModel shopModel)
-        {
-            return View("Index", TravelAgencyService.FilteredByTravelAgency(shopModel));
-        }
-
-        public IActionResult FilteredByCategory(ShopModel shopModel)
-        {
-            bool anOptionIsSelected = shopModel.ProductCategoryId != 0;
-
-            if (anOptionIsSelected)
-            {
-                var productsFromCategory = CategoryService.GetProductsForCategory(shopModel.ProductCategoryId);
-                shopModel.ConfigureClassPropertiesCategory(ProductService, productsFromCategory);
-                return View("Index", shopModel);
-            }
-
-            FilteredByTravelAgency(shopModel);
-            return View("Index", new ShopModel(ProductService));
-        }
-        */
-
         public IActionResult TravelDetails(int id)
         {
             Product product = ProductService.GetProductForId(id);
@@ -107,14 +94,6 @@ namespace Codecool.CodecoolShop.Controllers
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-
-        /*
-        public IActionResult FilteredByCountries(ShopModel shopModel)
-        {
-            return View("Index", CountryService.FilteredByCountry(shopModel));
-
-        }
-        */
 
         public IActionResult Error()
         {

@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace Codecool.CodecoolShop.Daos
 {
-    public interface IDao<T>
+    public interface IDao<T> : IDaoMemory
     {
         void Add(T item);
         void Remove(int id);

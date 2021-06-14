@@ -8,9 +8,9 @@ namespace Codecool.CodecoolShop.Daos.Implementations
     public class OrderDataDaoMemory : IOrderDataDao
     {
         private ShopContext _context;
-        public OrderDataDaoMemory()
+        public OrderDataDaoMemory(ShopContext shopContext)
         {
-            _context = new ShopContext();
+            _context = shopContext;
         }
 
         public void Add(OrderData item)

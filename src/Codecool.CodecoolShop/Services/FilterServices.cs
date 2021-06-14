@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
+using Codecool.CodecoolShop.Daos;
+using Codecool.CodecoolShop.Daos.Implementations;
 using Codecool.CodecoolShop.Models;
 using Codecool.CodecoolShop.Search;
 
@@ -7,28 +9,22 @@ namespace Codecool.CodecoolShop.Services
 {
     public class FilterServices
     {
-        private TravelAgencyService _travelAgencyService;
-        private ProductService _productService;
-        private CountryService _countryService;
-        private CategoryService _categoryService;
         private int _travelAgencyId;
         private int _categoryId;
         private int _countryId;
+        
+        private ProductDaoMemory _productContext;
 
-        public FilterServices(TravelAgencyService travelAgencyService, ProductService productService, 
-            CountryService countryService, CategoryService categoryService)
+        public FilterServices(ProductDaoMemory productContext)
         {
-            _travelAgencyService = travelAgencyService;
-            _productService = productService;
-            _countryService = countryService;
-            _categoryService = categoryService;
+            _productContext = productContext;
         }
 
         public ShopModel Filter(ShopModel shopModel)
         {
             LoadSelectedFilterOptions(shopModel);
             var filteredProducts = SelectProducts();
-            shopModel.ConfigureClassProperties(filteredProducts);//_productService, filteredProducts);
+            shopModel.ConfigureShopModelProperties(_productContext, filteredProducts);//_productService, filteredProducts);
             return shopModel;
         }
         
@@ -41,21 +37,21 @@ namespace Codecool.CodecoolShop.Services
 
         private List<Product> SelectProducts()
         {
-            var filteredProducts = _productService.GetAllProducts().ToList();
-            filteredProducts = UpdateFilteredProductsList<TravelAgency>(_travelAgencyService, _travelAgencyId, filteredProducts);
-            filteredProducts = UpdateFilteredProductsList<ProductCategory>(_categoryService, _categoryId, filteredProducts);
-            filteredProducts = UpdateFilteredProductsList<Country>(_countryService, _countryId, filteredProducts);
-            return filteredProducts;
-        }
+            var filtered = _productContext.GetAll();
 
+            filtered = _travelAgencyId == 0 ? filtered : filtered.Where(product => product.TravelAgency.Id == _travelAgencyId);
+            filtered = _countryId == 0 ? filtered : filtered.Where(product => product.Country.Id == _countryId);
+            filtered = _categoryId == 0 ? filtered : filtered.Where(product => product.ProductCategory.Id == _categoryId);
+
+            return filtered.ToList();
+        }
+        
+
+        /*
         private List<Product> UpdateFilteredProductsList<T>(IService service, int id, List<Product> initialProductList) where T : BaseFilter, new()
         {
             return id != 0 ? new T().GetProductForFilter(service, id, initialProductList) : initialProductList;
         }
-        
-        private List<Product> UpdateFilteredProductsList<T>(int id, List<Product> initialProductList) where T : BaseFilter, new()
-        {
-            return id != 0 ? new T().GetProductForFilter(id, initialProductList) : initialProductList;
-        }
+        */
     }
 }

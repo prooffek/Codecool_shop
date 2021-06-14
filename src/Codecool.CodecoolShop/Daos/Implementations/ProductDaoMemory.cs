@@ -16,9 +16,13 @@ namespace Codecool.CodecoolShop.Daos.Implementations
 
         public ProductDaoMemory()
         {
-            
             _context = new ShopContext();
             //_data = _context.Product.ToList();
+        }
+
+        public ProductDaoMemory(ShopContext shopContext)
+        {
+            _context = shopContext;
         }
 
         public static ProductDaoMemory GetInstance()

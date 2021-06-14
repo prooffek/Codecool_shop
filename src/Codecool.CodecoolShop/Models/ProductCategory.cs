@@ -9,8 +9,23 @@ namespace Codecool.CodecoolShop.Models
     {
         
         public List<Product> Products { get; set; }
-        public List<IFilterable> GetSelectOptions(IEnumerable<Product> products1)
+        public List<IFilterable> GetSelectOptions(IEnumerable<Product> products)
         {
+            var categoryNames = new List<string>();
+            var productsByCategory = new List<IFilterable>();
+
+            foreach (var product in products)
+            {
+                if (!categoryNames.Contains(product.ProductCategory.Name))
+                {
+                    categoryNames.Add(product.ProductCategory.Name);
+                    productsByCategory.Add(product.ProductCategory);
+                }
+            }
+
+            return productsByCategory;
+            
+            /*
             List<IFilterable> categoriesNames = new List<IFilterable>();
             var count = 0;
             foreach (var product in products1)
@@ -24,6 +39,7 @@ namespace Codecool.CodecoolShop.Models
             }
 
             return categoriesNames;
+            */
         }
 
         public override string ToString()

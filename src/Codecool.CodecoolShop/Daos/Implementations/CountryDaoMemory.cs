@@ -7,12 +7,18 @@ namespace Codecool.CodecoolShop.Daos.Implementations
 {
     public class CountryDaoMemory: ICountryDao
     {
-        private ShopContext _shopContext = new ShopContext();
+        private ShopContext _shopContext; // = new ShopContext();
         // private List<Country> data = new List<Country>();
         private static CountryDaoMemory instance = null;
 
+        public CountryDaoMemory(ShopContext shopContext)
+        {
+            _shopContext = shopContext;
+        }
+
         public CountryDaoMemory()
         {
+            _shopContext = new ShopContext();
         }
 
         public static CountryDaoMemory GetInstance()

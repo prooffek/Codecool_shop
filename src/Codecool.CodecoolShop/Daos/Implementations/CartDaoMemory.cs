@@ -7,7 +7,12 @@ namespace Codecool.CodecoolShop.Daos.Implementations
 {
     public class CartDaoMemory: ICartDao
     {
-        private ShopContext _shopContext = new ShopContext();
+        private ShopContext _shopContext; // = new ShopContext();
+
+        public CartDaoMemory(ShopContext shopContext)
+        {
+            _shopContext = shopContext;
+        }
         public void Add(Cart item)
         {
             _shopContext.Cart.Add(item);
