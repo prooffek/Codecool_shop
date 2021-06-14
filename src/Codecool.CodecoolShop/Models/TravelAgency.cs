@@ -10,14 +10,19 @@ namespace Codecool.CodecoolShop.Models
         public List<Product> Products { get; set; }
         public List<IFilterable> GetSelectOptions(IEnumerable<Product> products)
         {
-            List<IFilterable> agencyNames = new List<IFilterable>();
+            var agenciesNames = new List<string>();
+            List<IFilterable> TravelAgencies = new List<IFilterable>();
 
             foreach (var product in products)
             {
-                if (!agencyNames.Contains(product.TravelAgency)) agencyNames.Add(product.TravelAgency);
+                if (!agenciesNames.Contains(product.TravelAgency.Name))
+                {
+                    agenciesNames.Add(product.TravelAgency.Name);
+                    TravelAgencies.Add(product.TravelAgency);
+                }
             }
 
-            return agencyNames;
+            return TravelAgencies;
         }
 
         /*

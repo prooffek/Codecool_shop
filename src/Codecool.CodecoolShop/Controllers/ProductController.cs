@@ -54,7 +54,8 @@ namespace Codecool.CodecoolShop.Controllers
 
         public IActionResult Index()
         {
-            var shopModel = new ShopModel(ProductService);
+            var shopModel = new ShopModel();
+            //var shopModel = new ShopModel(ProductService);
             // var cart = SessionHelper.GetObjectFromJson<Cart>(HttpContext.Session, "cart");
 
             return View(shopModel);

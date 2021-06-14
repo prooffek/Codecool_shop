@@ -64,12 +64,13 @@ namespace Codecool.CodecoolShop.Daos.Implementations
 
         public IEnumerable<Product> GetAll()
         {
-            return _context.Product.OrderBy(p => p.Name);
+            var products = _context.Product.OrderBy(p => p.Name).ToList();
+            return products.Select(product => FillEmptyProperty(product)).ToList();
         }
 
         public IEnumerable<Product> GetBy(TravelAgency travelAgency)
         {
-            IEnumerable<Product> ProductsByCategory = new List<Product>();
+            List<Product> ProductsByCategory = new List<Product>();
             var productCategoryId = travelAgency.Id;
             var temp =_context.Product.Where(x => x.ProductCategoryId == productCategoryId).ToList();
             foreach (var element in temp)

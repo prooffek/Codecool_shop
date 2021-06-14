@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Codecool.CodecoolShop.Controllers;
+using Codecool.CodecoolShop.Daos;
+using Codecool.CodecoolShop.Daos.Implementations;
 using Codecool.CodecoolShop.Search;
 using Codecool.CodecoolShop.Services;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -21,11 +23,41 @@ namespace Codecool.CodecoolShop.Models
         public List<IFilterable> CategoriesOptions { get; set; }
         public List<IFilterable> CountriesOptions { get; set; }
         
-        
         public ShopModel()
         {
+            var context = new ProductDaoMemory();
+            var products = context.GetAll().ToList();
+            Products = products;
+            AllProducts = products;
+            AgenciesOptions = new TravelAgency().GetSelectOptions(AllProducts);
+            CategoriesOptions = new ProductCategory().GetSelectOptions(AllProducts);
+            TravelAgencies = new SelectList(AgenciesOptions, "Id", "Name");
+            Categories = new SelectList(CategoriesOptions, "Id", "Name");
+            TravelAgencyId = 0;
+            CountriesOptions = new Country().GetSelectOptions(Products);
+            Countries = new SelectList(CountriesOptions, "Id", "Name");
+            CountryId = 0;
+            ProductCategoryId = 0;
+        }
+        
+        public ShopModel(int agencyId, int countryId, int categoryId)
+        {
+            var context = new ProductDaoMemory();
+            var products = context.GetAll().ToList();
+            Products = products;
+            AllProducts = products;
+            AgenciesOptions = new TravelAgency().GetSelectOptions(AllProducts);
+            CategoriesOptions = new ProductCategory().GetSelectOptions(AllProducts);
+            TravelAgencies = new SelectList(AgenciesOptions, "Id", "Name");
+            Categories = new SelectList(CategoriesOptions, "Id", "Name");
+            TravelAgencyId = agencyId;
+            CountriesOptions = new Country().GetSelectOptions(Products);
+            Countries = new SelectList(CountriesOptions, "Id", "Name");
+            CountryId = countryId;
+            ProductCategoryId = categoryId;
         }
 
+        /*
         public ShopModel(ProductService productService, int agencyId = 0, int countryId = 0, int categoryId = 0)
         {
             Products = productService.GetAllProducts();
@@ -39,6 +71,20 @@ namespace Codecool.CodecoolShop.Models
             Countries = new SelectList(CountriesOptions, "Id", "Name");
             CountryId = countryId;
             ProductCategoryId = categoryId;
+        }
+        */
+        
+        public void ConfigureClassProperties(IEnumerable<Product> selectedProducts)
+        {
+            var context = new ProductDaoMemory();
+            Products = selectedProducts;
+            AllProducts = context.GetAll(); //prop
+            AgenciesOptions = new TravelAgency().GetSelectOptions(AllProducts); //prop
+            TravelAgencies = new SelectList(AgenciesOptions, "Id", "Name");
+            CountriesOptions = new Country().GetSelectOptions(Products); //prop
+            Countries = new SelectList(CountriesOptions, "Id", "Name"); //prop
+            CategoriesOptions = new ProductCategory().GetSelectOptions(Products); //prop
+            Categories = new SelectList(CategoriesOptions, "Id", "Name");
         }
 
         public void ConfigureClassProperties(ProductService productService, IEnumerable<Product> selectedProducts)

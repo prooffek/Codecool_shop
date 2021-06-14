@@ -15,5 +15,15 @@ namespace Codecool.CodecoolShop.Models
             var result = newList.Where(product => initialList.Contains(product)).ToList();
             return result;
         }
+        
+        public List<Product> GetProductForFilter(int id, List<Product> initialList)
+        {
+            var newList = service.GetProductsForId(id).ToList();
+
+            if (initialList.Count == 0)
+                return newList;
+            var result = newList.Where(product => initialList.Contains(product)).ToList();
+            return result;
+        }
     }
 }

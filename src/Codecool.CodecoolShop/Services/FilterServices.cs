@@ -28,7 +28,7 @@ namespace Codecool.CodecoolShop.Services
         {
             LoadSelectedFilterOptions(shopModel);
             var filteredProducts = SelectProducts();
-            shopModel.ConfigureClassProperties(_productService, filteredProducts);
+            shopModel.ConfigureClassProperties(filteredProducts);//_productService, filteredProducts);
             return shopModel;
         }
         
@@ -51,6 +51,11 @@ namespace Codecool.CodecoolShop.Services
         private List<Product> UpdateFilteredProductsList<T>(IService service, int id, List<Product> initialProductList) where T : BaseFilter, new()
         {
             return id != 0 ? new T().GetProductForFilter(service, id, initialProductList) : initialProductList;
+        }
+        
+        private List<Product> UpdateFilteredProductsList<T>(int id, List<Product> initialProductList) where T : BaseFilter, new()
+        {
+            return id != 0 ? new T().GetProductForFilter(id, initialProductList) : initialProductList;
         }
     }
 }

@@ -64,7 +64,7 @@ namespace Codecool.CodecoolShop
                     pattern: "{controller=Product}/{action=Index}/{id?}");
             });
 
-            SetupInMemoryDatabases();
+            //SetupInMemoryDatabases();
             
             /*
             var shopContext = new ShopContext();
