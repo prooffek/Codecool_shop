@@ -33,6 +33,15 @@ namespace Codecool.CodecoolShop.Daos.Implementations
             }
             return instance;
         }
+        
+        public static ProductDaoMemory GetInstance(ShopContext shopContext)
+        {
+            if (instance == null)
+            {
+                instance = new ProductDaoMemory(shopContext);
+            }
+            return instance;
+        }
 
         public void Add(Product item)
         {

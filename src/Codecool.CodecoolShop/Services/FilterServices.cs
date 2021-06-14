@@ -45,13 +45,5 @@ namespace Codecool.CodecoolShop.Services
 
             return filtered.ToList();
         }
-        
-
-        /*
-        private List<Product> UpdateFilteredProductsList<T>(IService service, int id, List<Product> initialProductList) where T : BaseFilter, new()
-        {
-            return id != 0 ? new T().GetProductForFilter(service, id, initialProductList) : initialProductList;
-        }
-        */
     }
 }

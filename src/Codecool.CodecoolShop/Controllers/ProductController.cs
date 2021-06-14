@@ -31,6 +31,7 @@ namespace Codecool.CodecoolShop.Controllers
         //Contexts
         public ShopContext ShopContext { get; set; }
         public ProductDaoMemory ProductContext { get; set; }
+        public ProductCategoryDaoMemory CategoryContext { get; set; }
 
         public ProductController(ILogger<ProductController> logger, ShopContext shopContext)
         {
@@ -58,7 +59,7 @@ namespace Codecool.CodecoolShop.Controllers
 
             //Contexts
             ShopContext = shopContext;
-            ProductContext = new ProductDaoMemory(shopContext);
+            ProductContext = ProductDaoMemory.GetInstance(ShopContext);
 
             //DB Services
             FilterServices = new FilterServices(ProductContext);
